@@ -7,9 +7,8 @@ local M = "SUPER"
 -- ───────────────────────────────────────────
 -- Core
 -- ───────────────────────────────────────────
-hl.bind(M .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland configuration" })
+hl.bind(M .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland configuration" })
 hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window" })
-hl.bind(M .. " + CTRL + M", hl.dsp.exit(), { description = "Exit Hyprland" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
 hl.bind(M .. " + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
 hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "System monitor (btop)" })
@@ -21,8 +20,8 @@ hl.bind(M .. " + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), 
 hl.bind(M .. " + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"), { description = "Control center" })
 hl.bind(M .. " + CTRL + Space", hl.dsp.exec_cmd("noctalia msg settings-toggle"), { description = "Settings toggle" })
 hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg panel-toggle wallpaper"), { description = "Wallpaper picker" })
-hl.bind(M .. " + CTRL + period", hl.dsp.exec_cmd("noctalia msg notification-clear-history"), { description = "Clear notifications" })
-hl.bind(M .. " + CTRL + comma", hl.dsp.exec_cmd("noctalia msg clipboard-clear"), { description = "Clear clipboard" })
+hl.bind(M .. " + ALT + period", hl.dsp.exec_cmd("noctalia msg notification-clear-history"), { description = "Clear notifications" })
+hl.bind(M .. " + ALT + comma", hl.dsp.exec_cmd("noctalia msg clipboard-clear"), { description = "Clear clipboard" })
 hl.bind(M .. " + CTRL + C", hl.dsp.exec_cmd("noctalia msg caffeine-toggle"), { description = "Toggle caffeine" })
 hl.bind(M .. " + CTRL + slash", hl.dsp.exec_cmd("noctalia msg panel-toggle noctalia/wallhaven:browser"), { description = "Wallhaven wallpaper" })
 hl.bind(M .. " + CTRL + backslash", hl.dsp.exec_cmd("noctalia msg panel-toggle noctalia/mpvpaper:picker"), { description = "Video wallpaper" })
@@ -44,8 +43,8 @@ hl.bind(M .. " + SHIFT + up", hl.dsp.window.swap({ direction = "u" }), { descrip
 hl.bind(M .. " + SHIFT + down", hl.dsp.window.swap({ direction = "d" }), { description = "Swap window down" })
 
 -- Move to adjacent workspace
-hl.bind(M .. " + CTRL + left", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
-hl.bind(M .. " + CTRL + right", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
+hl.bind(M .. " + CTRL + up", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
+hl.bind(M .. " + CTRL + down", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
 
 -- ───────────────────────────────────────────
 -- Window States
@@ -63,7 +62,7 @@ hl.bind(M .. " + ALT + T",
 -- ───────────────────────────────────────────
 -- Window Cycling
 -- ───────────────────────────────────────────
-hl.bind("ALT + Tab", hl.dsp.window.cycle_next(), { description = "Cycle windows" })
+hl.bind("ALT + Tab", hl.dsp.window.cycle_next({ tiled = true }), { description = "Cycle windows" })
 
 -- ───────────────────────────────────────────
 -- Scratchpad
@@ -77,32 +76,42 @@ hl.bind(M .. " + SHIFT + CTRL + S", hl.dsp.window.move({ workspace = "previous" 
 -- ───────────────────────────────────────────
 -- Layout Controls
 -- ───────────────────────────────────────────
-hl.bind(M .. " + CTRL + L", hl.dsp.exec_cmd([[sh -c '
-ACTIVE_WORKSPACE=$(hyprctl activeworkspace -j | jq -r ".id")
-CURRENT_LAYOUT=$(hyprctl activeworkspace -j | jq -r ".tiledLayout")
-case "$CURRENT_LAYOUT" in
-  dwindle) NEW_LAYOUT=scrolling ;;
-  *) NEW_LAYOUT=dwindle ;;
-esac
-hyprctl eval "hl.workspace_rule({ workspace = \"$ACTIVE_WORKSPACE\", layout = \"$NEW_LAYOUT\" })"
-notify-send -u low "󱂬    Workspace layout set to $NEW_LAYOUT"
-']]), { description = "Cycle layout" })
+hl.bind(M .. " + CTRL + L", function()
+  local layouts = { "scrolling", "master", "dwindle", "monocle" }
+  local ws = hl.get_active_workspace()
+  if not ws then return end
+
+  local next = "dwindle"
+  for i = 1, #layouts do
+    if layouts[i] == ws.tiled_layout then
+      next = layouts[(i % #layouts) + 1]
+      break
+    end
+  end
+  hl.workspace_rule({ workspace = tostring(ws.id), layout = next })
+  os.execute("notify-send -u low 'Layout: " .. next .. "'")
+end, { description = "Cycle all layouts" })
+hl.bind(M .. " + ALT + left", hl.dsp.layout("consume_or_expel prev"), { description = "Consume/expel left (scrolling)" })
+hl.bind(M .. " + ALT + right", hl.dsp.layout("consume_or_expel next"), { description = "Consume/expel right (scrolling)" })
+hl.bind(M .. " + CTRL + left", hl.dsp.layout("focus l"), { description = "Focus left (scrolling)" })
+hl.bind(M .. " + CTRL + right", hl.dsp.layout("focus r"), { description = "Focus right (scrolling)" })
 hl.bind(M .. " + CTRL + K", hl.dsp.layout("swapsplit"), { description = "Swap split" })
 hl.bind(M .. " + CTRL + J", hl.dsp.layout("togglesplit"), { description = "Toggle split" })
+hl.bind(M .. " + CTRL + M", hl.dsp.layout("orientationnext"), { description = "Cycle master orientation" })
 
 -- ───────────────────────────────────────────
 -- Window Grouping
 -- ───────────────────────────────────────────
-hl.bind(M .. " + CTRL + G", hl.dsp.group.toggle(), { description = "Toggle window group" })
-hl.bind(M .. " + ALT + G", hl.dsp.window.move({ out_of_group = true }), { description = "Out of group" })
-hl.bind(M .. " + ALT + left", hl.dsp.window.move({ into_group = "l" }), { description = "Into group left" })
-hl.bind(M .. " + ALT + right", hl.dsp.window.move({ into_group = "r" }), { description = "Into group right" })
-hl.bind(M .. " + ALT + up", hl.dsp.window.move({ into_group = "u" }), { description = "Into group up" })
-hl.bind(M .. " + ALT + down", hl.dsp.window.move({ into_group = "d" }), { description = "Into group down" })
+hl.bind(M .. " + SHIFT + G", hl.dsp.group.toggle(), { description = "Toggle window group" })
+hl.bind(M .. " + CTRL + G", hl.dsp.window.move({ out_of_group = true }), { description = "Out of group" })
+hl.bind(M .. " + CTRL + Bracketleft", hl.dsp.window.move({ into_group = "l" }), { description = "Into group left" })
+hl.bind(M .. " + CTRL + Bracketright", hl.dsp.window.move({ into_group = "r" }), { description = "Into group right" })
+hl.bind(M .. " + ALT + Bracketright", hl.dsp.window.move({ into_group = "u" }), { description = "Into group up" })
+hl.bind(M .. " + ALT + Bracketleft", hl.dsp.window.move({ into_group = "d" }), { description = "Into group down" })
 hl.bind(M .. " + Tab", hl.dsp.group.next(), { description = "Group next" })
 hl.bind(M .. " + SHIFT + Tab", hl.dsp.group.prev(), { description = "Group prev" })
 for i = 1, 5 do
-    hl.bind(M .. " + ALT + " .. i, hl.dsp.group.active({ index = i }), { description = "Group index " .. i })
+    hl.bind(M .. " + CTRL + " .. i, hl.dsp.group.active({ index = i }), { description = "Group index " .. i })
 end
 
 -- ───────────────────────────────────────────
@@ -203,8 +212,9 @@ hl.bind(M .. " + P", hl.dsp.exec_cmd("protonplus"), { description = "ProtonPlus"
 -- ───────────────────────────────────────────
 -- Gaming Mode
 -- ───────────────────────────────────────────
-hl.bind(M .. " + SHIFT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode (SDDM switch)" })
-hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("/usr/local/bin/switch-to-desktop"), { description = "Exit gaming mode" })
+hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode (SDDM switch)" })
+hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland configuration" })
+hl.bind(M .. " + ALT + R", hl.dsp.exec_cmd("/usr/local/bin/switch-to-desktop"), { description = "Exit gaming mode" })
 
 -- ───────────────────────────────────────────
 -- Mouse Bindings
@@ -216,5 +226,5 @@ hl.bind("mouse:274", hl.dsp.window.fullscreen(), { mouse = true, description = "
 -- ───────────────────────────────────────────
 -- Scroll through workspaces (Super + Scroll)
 -- ───────────────────────────────────────────
-hl.bind(M .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace (scroll)" })
-hl.bind(M .. " + mouse_up", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace (scroll)" })
+hl.bind(M .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace (scroll)" })
+hl.bind(M .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace (scroll)" })
