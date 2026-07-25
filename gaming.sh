@@ -28,7 +28,7 @@ install_packages() {
     log_info "Installing ChimeraOS session packages..."
     local pkgs=()
     pacman -Qi gamescope-session-git &>/dev/null || pkgs+=("gamescope-session-git")
-    pacman -Qi gamescope-session-steam-git &>/dev/null || pkgs+=("gamescope-session-steam-git")
+    # pacman -Qi gamescope-session-steam-git &>/dev/null || pkgs+=("gamescope-session-steam-git")  # removed: duplicates gaming entry in SDDM
     if ((${#pkgs[@]})); then
         sudo pacman -S --noconfirm "${pkgs[@]}" || log_warn "Failed to install: ${pkgs[*]}"
     fi
