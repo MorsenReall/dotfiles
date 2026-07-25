@@ -213,7 +213,7 @@ hl.bind(M .. " + P", hl.dsp.exec_cmd("protonplus"), { description = "ProtonPlus"
 -- Gaming Mode
 -- ───────────────────────────────────────────
 hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode (SDDM switch)" })
-hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("/usr/local/bin/switch-to-desktop"), { description = "Exit gaming mode" })
+hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland configuration" })
 
 -- ───────────────────────────────────────────
 -- Mouse Bindings
