@@ -9,6 +9,7 @@ local M = "SUPER"
 -- ───────────────────────────────────────────
 hl.bind(M .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland configuration" })
 hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window" })
+hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland (redundant)" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
 hl.bind(M .. " + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
 hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "System monitor (btop)" })
@@ -208,12 +209,7 @@ hl.bind(M .. " + G", hl.dsp.exec_cmd("steam"), { description = "Steam" })
 hl.bind(M .. " + A", hl.dsp.exec_cmd("/opt/AionUi/AionUi"), { description = "AionUI" })
 hl.bind(M .. " + U", hl.dsp.exec_cmd("/opt/abdownloadmanager/bin/ABDownloadManager"), { description = "AB Download Manager" })
 hl.bind(M .. " + P", hl.dsp.exec_cmd("protonplus"), { description = "ProtonPlus" })
-
--- ───────────────────────────────────────────
--- Gaming Mode
--- ───────────────────────────────────────────
-hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode (SDDM switch)" })
-hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland configuration" })
+-- hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode" })
 
 -- ───────────────────────────────────────────
 -- Mouse Bindings
