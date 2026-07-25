@@ -209,7 +209,7 @@ hl.bind(M .. " + G", hl.dsp.exec_cmd("steam"), { description = "Steam" })
 hl.bind(M .. " + A", hl.dsp.exec_cmd("/opt/AionUi/AionUi"), { description = "AionUI" })
 hl.bind(M .. " + U", hl.dsp.exec_cmd("/opt/abdownloadmanager/bin/ABDownloadManager"), { description = "AB Download Manager" })
 hl.bind(M .. " + P", hl.dsp.exec_cmd("protonplus"), { description = "ProtonPlus" })
--- hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode" })
+hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode" })
 
 -- ───────────────────────────────────────────
 -- Mouse Bindings
