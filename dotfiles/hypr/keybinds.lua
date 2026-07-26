@@ -92,12 +92,20 @@ hl.bind(M .. " + CTRL + L", function()
   hl.workspace_rule({ workspace = tostring(ws.id), layout = next })
   os.execute("notify-send -u low 'Layout: " .. next .. "'")
 end, { description = "Cycle all layouts" })
+
+-- scrolling
 hl.bind(M .. " + ALT + left", hl.dsp.layout("consume_or_expel prev"), { description = "Consume/expel left (scrolling)" })
 hl.bind(M .. " + ALT + right", hl.dsp.layout("consume_or_expel next"), { description = "Consume/expel right (scrolling)" })
+hl.bind(M .. " + ALT + up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace" })
+hl.bind(M .. " + ALT + down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace" })
 hl.bind(M .. " + CTRL + left", hl.dsp.layout("focus l"), { description = "Focus left (scrolling)" })
 hl.bind(M .. " + CTRL + right", hl.dsp.layout("focus r"), { description = "Focus right (scrolling)" })
+
+-- dwindle
 hl.bind(M .. " + CTRL + K", hl.dsp.layout("swapsplit"), { description = "Swap split" })
 hl.bind(M .. " + CTRL + J", hl.dsp.layout("togglesplit"), { description = "Toggle split" })
+
+-- master
 hl.bind(M .. " + CTRL + M", hl.dsp.layout("orientationnext"), { description = "Cycle master orientation" })
 
 -- ───────────────────────────────────────────
@@ -224,9 +232,7 @@ hl.bind("mouse:274", hl.dsp.window.fullscreen({ mode = "maximized", action = "to
 -- ───────────────────────────────────────────
 hl.bind(M .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace (scroll)" })
 hl.bind(M .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace (scroll)" })
-hl.bind(M .. " + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace (scroll)" })
-hl.bind(M .. " + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace (scroll)" })
+hl.bind(M .. " + ALT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace (scroll)" })
+hl.bind(M .. " + ALT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace (scroll)" })
 hl.bind(M .. " + CTRL + mouse_up", hl.dsp.layout("focus l"), { description = "Focus left (scrolling scroll)" })
 hl.bind(M .. " + CTRL + mouse_down", hl.dsp.layout("focus r"), { description = "Focus right (scrolling scroll)" })
-hl.bind(M .. " + ALT + up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace" })
-hl.bind(M .. " + ALT + down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace" })
