@@ -228,3 +228,5 @@ hl.bind(M .. " + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }), {
 hl.bind(M .. " + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace (scroll)" })
 hl.bind(M .. " + CTRL + mouse_up", hl.dsp.layout("focus l"), { description = "Focus left (scrolling scroll)" })
 hl.bind(M .. " + CTRL + mouse_down", hl.dsp.layout("focus r"), { description = "Focus right (scrolling scroll)" })
+hl.bind(M .. " + ALT + up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace" })
+hl.bind(M .. " + ALT + down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace" })
