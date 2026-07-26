@@ -217,10 +217,14 @@ hl.bind(M .. " + ALT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), {
 -- ───────────────────────────────────────────
 hl.bind(M .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Move window with mouse" })
 hl.bind(M .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "Resize window with mouse" })
-hl.bind("mouse:274", hl.dsp.window.fullscreen(), { mouse = true, description = "Fullscreen (middle click)" })
+hl.bind("mouse:274", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }), { mouse = true, description = "Toggle Maximize (middle click)" })
 
 -- ───────────────────────────────────────────
 -- Scroll through workspaces (Super + Scroll)
 -- ───────────────────────────────────────────
 hl.bind(M .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace (scroll)" })
 hl.bind(M .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace (scroll)" })
+hl.bind(M .. " + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace (scroll)" })
+hl.bind(M .. " + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace (scroll)" })
+hl.bind(M .. " + CTRL + mouse_up", hl.dsp.layout("focus l"), { description = "Focus left (scrolling scroll)" })
+hl.bind(M .. " + CTRL + mouse_down", hl.dsp.layout("focus r"), { description = "Focus right (scrolling scroll)" })
