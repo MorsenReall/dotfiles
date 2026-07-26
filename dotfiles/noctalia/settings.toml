@@ -1,4 +1,4 @@
-config_version = 2
+config_version = 7
 
 [audio]
 enable_overdrive = true
@@ -12,7 +12,6 @@ order = [ "Mindset" ]
 
     [bar.Mindset]
     background_opacity = 0.4999999888241291
-    capsule_thickness = 0.4999999925494194
     center = [ "workspaces", "audio_visualizer", "media" ]
     contact_shadow = true
     end = [
@@ -31,11 +30,10 @@ order = [ "Mindset" ]
     ]
     font_family = "Comic Sans MS"
     font_weight = 400
-    margin_ends = 10
-    radius = 26
-    start = [ "launcher", "clock", "cpu", "temp", "ram", "privacy" ]
+    margin_ends = 25
+    radius = 50
+    start = [ "launcher", "clock", "cpu", "temp", "ram", "privacy", "keybinds" ]
     thickness = 30
-    widget_spacing = 8
 
 [battery]
 warning_threshold = 20
@@ -45,7 +43,12 @@ enable_ddcutil = true
 minimum_brightness = 0.099999997764825821
 
 [calendar]
-refresh_minutes = 60
+enabled = true
+
+    [calendar.account.personal]
+    color = "error"
+    name = "Shiin"
+    type = "google"
 
 [[control_center.shortcuts]]
 type = "wifi"
@@ -254,13 +257,22 @@ widget_order = [
 [notification]
 background_opacity = 0.4999999888241291
 layer = "overlay"
-scale = 0.80000000447034836
+scale = 0.7500000037252903
 
 [osd]
 background_opacity = 0.4999999888241291
 offset_y = 20
 position = "bottom_center"
 scale = 0.80000000447034836
+
+[plugin_settings."h465855hgg/lyrics"]
+max_chars = 40
+player_allowlist = []
+
+[plugin_settings."kenn/keybind-cheatsheet"]
+columns = 4
+show_actions = true
+show_undescribed = false
 
 [plugin_settings."nightwatch75/todo"]
 panel_placement = "floating"
@@ -292,13 +304,19 @@ enabled = [
     "noctalia/kaomoji",
     "noctalia/mpvpaper",
     "oldirtty/color_picker",
-    "nightwatch75/todo"
+    "nightwatch75/todo",
+    "nightwatch75/file-search",
+    "cleboost/zed-provider",
+    "kenn/keybind-cheatsheet"
 ]
 
 [shell]
+app_icon_color = "error"
 avatar_path = "/var/lib/AccountsService/icons/mindset"
-clipboard_image_action_command = "grim -g \"$(slurp)\" - | satty -f-"
+clipboard_image_action_command = "satty -f -"
+external_ip_enabled = true
 font_family = "Comic Sans MS"
+niri_overview_type_to_launch_enabled = true
 password_style = "random"
 polkit_agent = true
 screen_time_enabled = true
@@ -306,6 +324,7 @@ settings_show_advanced = true
 
     [shell.launcher]
     session_search = true
+    sort_by_usage = false
 
     [shell.panel]
     clipboard_position = "auto"
@@ -315,13 +334,14 @@ settings_show_advanced = true
     open_near_click_clipboard = true
     open_near_click_control_center = true
     open_near_click_launcher = true
+    open_near_click_session = true
     open_near_click_wallpaper = true
-    session_placement = "centered"
+    session_placement = "floating"
     transparency_mode = "glass"
     wallpaper_placement = "floating"
 
-    [shell.shadow]
-    alpha = 0.59999998658895493
+    [shell.screenshot]
+    confirm_region = true
 
 [system.monitor]
 cpu_temp_activity_threshold = 80
@@ -351,7 +371,9 @@ wallpaper_scheme = "m3-tonal-spot"
         "neovim",
         "zed",
         "rofi",
+        "bat",
         "heroiclauncher",
+        "obs",
         "opencode",
         "steam",
         "telegram",
@@ -367,13 +389,13 @@ transition_on_startup = true
     interval_seconds = 60
 
     [wallpaper.default]
-    path = "/home/mindset/Pictures/Wallpapers/wallhaven-dp19wl.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/wallhaven-7jev2v.jpg"
 
     [wallpaper.last]
-    path = "/home/mindset/Pictures/Wallpapers/wallhaven-dp19wl.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/wallhaven-7jev2v.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/mindset/Pictures/Wallpapers/wallhaven-dp19wl.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/wallhaven-7jev2v.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
@@ -414,8 +436,12 @@ format = "{:%H:%M:%S}"
 [widget.cpu]
 stat = "cpu_temp"
 
+[widget.keybinds]
+type = "kenn/keybind-cheatsheet:keybinds"
+
 [widget.launcher]
-glyph = "brand-apple-filled"
+custom_image = "/usr/share/icons/cachyos.svg"
+glyph = "brand-github"
 
 [widget.notes]
 type = "noctalia/notes:notes"

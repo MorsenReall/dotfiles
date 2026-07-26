@@ -45,6 +45,7 @@ install_packages() {
     log_info "Installing Hyprland-specific packages..."
     pacman_install hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control
     pacman_install noctalia
+    pacman_install gnome-keyring
     log_ok "Packages installed."
 }
 
@@ -152,6 +153,8 @@ main() {
     install_packages
     enable_switcheroo
     enable_sddm
+    log_info "Enabling gnome-keyring systemd user service..."
+    systemctl --user enable --now gnome-keyring-daemon.service 2>/dev/null && log_ok "gnome-keyring enabled." || log_warn "gnome-keyring enable failed."
     setup_session_file
     setup_polkit_fix
     copy_dotfiles

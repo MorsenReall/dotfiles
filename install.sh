@@ -104,6 +104,9 @@ install_packages() {
         gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav \
         x264 x265
 
+    # gnome-keyring
+    pacman_install gnome-keyring
+
     # Filesystem tools
     pacman_install \
         exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump
@@ -331,6 +334,15 @@ setup_chaotic_aur() {
     log_ok "Chaotic-AUR configured."
 }
 
+setup_gnome_keyring() {
+    log_info "Enabling gnome-keyring systemd user service..."
+    if systemctl --user enable --now gnome-keyring-daemon.service 2>/dev/null; then
+        log_ok "gnome-keyring enabled & started."
+    else
+        log_warn "gnome-keyring enable failed."
+    fi
+}
+
 main() {
     preflight_checks
     setup_chaotic_aur
@@ -343,6 +355,7 @@ main() {
     setup_mise
     setup_opencode
     copy_dotfiles
+    setup_gnome_keyring
     fix_audio
     copy_wallpapers
     copy_project_dirs
