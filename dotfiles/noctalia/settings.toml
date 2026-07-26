@@ -32,7 +32,7 @@ order = [ "Mindset" ]
     font_weight = 400
     margin_ends = 25
     radius = 50
-    start = [ "launcher", "clock", "cpu", "temp", "ram", "privacy", "keybinds" ]
+    start = [ "launcher", "clock", "summary", "cpu", "temp", "ram", "privacy" ]
     thickness = 30
 
 [battery]
@@ -265,6 +265,17 @@ offset_y = 20
 position = "bottom_center"
 scale = 0.80000000447034836
 
+[plugin_settings."blackbartblues/audio-switcher"]
+audio-switcher_placement = "floating"
+audio-switcher_position = "auto"
+
+[plugin_settings."gustav0ar/drive-health"]
+critical_temperature = 90
+drives_position = "auto"
+life_warning_percent = 25
+system_collector_enabled = true
+warning_temperature = 80
+
 [plugin_settings."h465855hgg/lyrics"]
 max_chars = 40
 player_allowlist = []
@@ -307,7 +318,8 @@ enabled = [
     "nightwatch75/todo",
     "nightwatch75/file-search",
     "cleboost/zed-provider",
-    "kenn/keybind-cheatsheet"
+    "kenn/keybind-cheatsheet",
+    "gustav0ar/drive-health"
 ]
 
 [shell]
@@ -436,9 +448,6 @@ format = "{:%H:%M:%S}"
 [widget.cpu]
 stat = "cpu_temp"
 
-[widget.keybinds]
-type = "kenn/keybind-cheatsheet:keybinds"
-
 [widget.launcher]
 custom_image = "/usr/share/icons/cachyos.svg"
 glyph = "brand-github"
@@ -454,6 +463,9 @@ type = "noctalia/screen_recorder:recorder"
 
 [widget.spacer_2]
 type = "spacer"
+
+[widget.summary]
+type = "gustav0ar/drive-health:summary"
 
 [widget.temp]
 stat = "gpu_temp"
