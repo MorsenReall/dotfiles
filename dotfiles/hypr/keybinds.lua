@@ -94,19 +94,19 @@ hl.bind(M .. " + CTRL + L", function()
 end, { description = "Cycle all layouts" })
 
 -- scrolling
-hl.bind(M .. " + ALT + left", hl.dsp.layout("consume_or_expel prev"), { description = "Consume/expel left (scrolling)" })
-hl.bind(M .. " + ALT + right", hl.dsp.layout("consume_or_expel next"), { description = "Consume/expel right (scrolling)" })
-hl.bind(M .. " + ALT + up", hl.dsp.window.move({ workspace = "e-1" }), { description = "Move window to previous workspace" })
-hl.bind(M .. " + ALT + down", hl.dsp.window.move({ workspace = "e+1" }), { description = "Move window to next workspace" })
-hl.bind(M .. " + CTRL + left", hl.dsp.layout("focus l"), { description = "Focus left (scrolling)" })
-hl.bind(M .. " + CTRL + right", hl.dsp.layout("focus r"), { description = "Focus right (scrolling)" })
+hl.bind(M .. " + ALT + left", hl.dsp.layout("consume_or_expel prev"), { description = "(Scrolling) Consume/expel left" })
+hl.bind(M .. " + ALT + right", hl.dsp.layout("consume_or_expel next"), { description = "(Scrolling) Consume/expel right" })
+hl.bind(M .. " + ALT + up", hl.dsp.window.move({ workspace = "e-1" }), { description = "(Scrolling) Move window to previous workspace" })
+hl.bind(M .. " + ALT + down", hl.dsp.window.move({ workspace = "e+1" }), { description = "(Scrolling) Move window to next workspace" })
+hl.bind(M .. " + CTRL + left", hl.dsp.layout("focus l"), { description = "(Scrolling) Focus left" })
+hl.bind(M .. " + CTRL + right", hl.dsp.layout("focus r"), { description = "(Scrolling) Focus right" })
 
 -- dwindle
-hl.bind(M .. " + CTRL + K", hl.dsp.layout("swapsplit"), { description = "Swap split" })
-hl.bind(M .. " + CTRL + J", hl.dsp.layout("togglesplit"), { description = "Toggle split" })
+hl.bind(M .. " + CTRL + K", hl.dsp.layout("swapsplit"), { description = "(Dwindle) Swap split" })
+hl.bind(M .. " + CTRL + J", hl.dsp.layout("togglesplit"), { description = "(Dwindle) Toggle split" })
 
 -- master
-hl.bind(M .. " + CTRL + M", hl.dsp.layout("orientationnext"), { description = "Cycle master orientation" })
+hl.bind(M .. " + CTRL + M", hl.dsp.layout("orientationnext"), { description = "(Master) Cycle master orientation" })
 
 -- ───────────────────────────────────────────
 -- Window Grouping
