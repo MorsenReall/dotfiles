@@ -36,7 +36,7 @@
 </p>
 
 <p align="center">
-  <a href="assets/screenshots/tour.mp4">▶️ Watch the tour video (30s)</a>
+  <sup>▶️ <i>Tour video coming soon on YouTube</i></sup>
 </p>
 
 ---

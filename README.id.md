@@ -36,7 +36,7 @@
 </p>
 
 <p align="center">
-  <a href="assets/screenshots/tour.mp4">▶️ Tonton video tour (30 detik)</a>
+  <sup>▶️ <i>Video tour menyusul di YouTube</i></sup>
 </p>
 
 ---
