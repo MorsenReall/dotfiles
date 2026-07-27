@@ -53,7 +53,7 @@ chmod +x mydotfiles.sh
 ```
 
 Nanti di-prompt: **Install gaming mode? (y/N)**
-- `y` → auto-install **Chaotic-AUR** (kalo belum ada) → jalanin `gaming.sh` (butuh sudo)
+- `y` → auto-install **Chaotic-AUR** (kalo belum ada) → jalanin `gaming.sh` (butuh sudo + **wajib SDDM**)
 - `n` atau Enter → skip, aman 100%
 
 ### Yang Di-copy
@@ -196,6 +196,8 @@ chmod +x *.sh
 ### Step 4: `gaming.sh` — DeckShift
 
 **Gaming session switch** — ala Steam Deck. Bisa ganti-ganti antara desktop Hyprland sama session gaming (gamescope + Steam Big Picture).
+
+> **Requirement:** Wajib pake **SDDM** sebagai display manager. Gaming session entry cuma bisa lewat SDDM.
 
 **Yang diinstall:**
 - `gamescope-session-git` (dari chaotic-aur binary repo)

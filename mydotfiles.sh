@@ -55,6 +55,7 @@ install_gaming() {
     echo -e "${YELLOW}Install gaming mode (DeckShift session switch)?${NC}"
     echo -e "  Gaming mode butuh Chaotic-AUR repo + gamescope-session-git."
     echo -e "  Semua akan diinstall otomatis."
+    echo -e "  ${RED}Wajib pake SDDM${NC} sebagai display manager."
     read -r -p "$(echo -e "${CYAN}[INPUT]${NC}  Lanjut? (y/N): ")" ans
     case "$ans" in
         [yY]|[yY][eE][sS])
