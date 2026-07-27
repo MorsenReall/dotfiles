@@ -27,6 +27,27 @@ copy_dotfiles() {
     hyprctl reload 2>/dev/null && log_ok "Hyprland reloaded." || log_warn "Hyprland not running, reload skipped."
 }
 
+check_chaotic_aur() {
+    if ! pacman -Qi chaotic-keyring &>/dev/null; then
+        echo -e "${YELLOW}Chaotic-AUR repo belum terinstall.${NC}"
+        echo -e "  Gaming mode butuh package dari Chaotic-AUR (gamescope-session-git)."
+        echo -e "  - Fresh install: jalanin ./install.sh dulu (setup Chaotic-AUR otomatis)"
+        echo -e "  - Manual: https://aur.chaotic.cx/docs/install"
+        echo ""
+        read -r -p "$(echo -e "${CYAN}[INPUT]${NC}  Tetap lanjut gaming mode? (y/N): ")" ans
+        case "$ans" in
+            [yY]|[yY][eE][sS])
+                log_warn "Melanjutkan tanpa Chaotic-AUR — gaming.sh mungkin gagal."
+                return 0
+                ;;
+            *)
+                log_info "Batal install gaming mode."
+                return 1
+                ;;
+        esac
+    fi
+}
+
 install_gaming() {
     echo ""
     echo -e "${YELLOW}Install gaming mode (DeckShift session switch)?${NC}"
@@ -35,6 +56,7 @@ install_gaming() {
     read -r -p "$(echo -e "${CYAN}[INPUT]${NC}  Lanjut? (y/N): ")" ans
     case "$ans" in
         [yY]|[yY][eE][sS])
+            check_chaotic_aur || return 0
             log_info "Installing gaming mode..."
             if [[ -x "${SCRIPT_DIR}/gaming.sh" ]]; then
                 "${SCRIPT_DIR}/gaming.sh"
