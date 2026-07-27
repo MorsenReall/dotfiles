@@ -32,7 +32,7 @@ order = [ "Mindset" ]
     font_weight = 400
     margin_ends = 25
     radius = 50
-    start = [ "launcher", "clock", "summary", "cpu", "temp", "ram", "privacy" ]
+    start = [ "launcher", "clock", "cpu", "temp", "ram", "summary", "privacy" ]
     thickness = 30
 
 [battery]
@@ -44,11 +44,15 @@ minimum_brightness = 0.099999997764825821
 
 [calendar]
 enabled = true
+refresh_minutes = 5
 
     [calendar.account.personal]
     color = "error"
     name = "Shiin"
     type = "google"
+
+[control_center.calendar]
+show_events_card = false
 
 [[control_center.shortcuts]]
 type = "wifi"
@@ -108,7 +112,6 @@ sunset = "18:00"
 
 [lockscreen]
 blur_intensity = 0.0
-wallpaper = "/home/mindset/Pictures/Wallpapers/自由阶梯.JPG"
 
 [lockscreen_widgets]
 enabled = true
@@ -128,10 +131,10 @@ widget_order = [
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 70.0
-    box_width = 400.0
+    box_height = 201.0
+    box_width = 720.0
     cx = 960.0
-    cy = 927.0
+    cy = 879.5
     output = "eDP-1"
     rotation = 0.0
     type = "login_box"
@@ -140,9 +143,15 @@ widget_order = [
         background_color = "on_primary"
         background_opacity = 0.59999999999999998
         background_radius = 20.0
+        center_password_text = false
         input_opacity = 1.0
         input_radius = 12.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = false
+        show_password_hint = true
+        show_session_buttons = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
     box_height = 224.0
@@ -219,7 +228,6 @@ widget_order = [
     type = "audio_visualizer"
 
         [lockscreen_widgets.widget.lockscreen-widget-0000000000000004.settings]
-        aspect_ratio = 6.0
         background = false
         bands = 60.0
         centered = true
@@ -398,16 +406,17 @@ fill_mode = "span"
 transition_on_startup = true
 
     [wallpaper.automation]
-    interval_seconds = 60
+    enabled = true
+    interval_seconds = 600
 
     [wallpaper.default]
-    path = "/home/mindset/Pictures/Wallpapers/wallhaven-7jev2v.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/wallhaven-lyj5gl.jpg"
 
     [wallpaper.last]
-    path = "/home/mindset/Pictures/Wallpapers/wallhaven-7jev2v.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/wallhaven-lyj5gl.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/mindset/Pictures/Wallpapers/wallhaven-7jev2v.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/wallhaven-lyj5gl.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
@@ -443,14 +452,17 @@ show_when_idle = true
 width = 100.0
 
 [widget.clock]
+capsule = true
+capsule_opacity = 0.29999999999999999
+capsule_padding = 15
+capsule_radius = 12
 format = "{:%H:%M:%S}"
 
 [widget.cpu]
 stat = "cpu_temp"
 
 [widget.launcher]
-custom_image = "/usr/share/icons/cachyos.svg"
-glyph = "brand-github"
+glyph = "brand-apple-filled"
 
 [widget.notes]
 type = "noctalia/notes:notes"
