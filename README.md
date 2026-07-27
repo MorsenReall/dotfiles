@@ -92,13 +92,13 @@ chmod +x *.sh
 
 | Kategori | Package |
 |----------|---------|
-| Dev Tools | `base-devel git curl wget rsync cmake meson ninja python shellcheck openssh flatpak` |
+| Dev Tools | `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak` |
 | Display/WM | `foot` |
-| CLI | `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors ddcutil dua-cli` |
-| Fonts | `ttf-jetbrains-mono{-nerd} ttf-meslo-nerd noto-fonts{-emoji} adobe-source-code-pro otf-comicshanns-nerd ttf-ms-fonts` |
+| CLI | `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors ddcutil dua-cli` |
+| Fonts | `ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts otf-comicshanns-nerd ttf-ms-fonts` |
 | Theme | `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme nordic-theme bibata-cursor-theme tela-icon-theme` |
-| Multimedia | `gst-plugins-{base,good,bad,ugly} gst-libav x264 x265` |
-| FS Tools | `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools` |
+| Multimedia | `gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav x264 x265` |
+| FS Tools | `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump` |
 | Lain | `gnome-keyring` |
 
 **Yang di-setup:**
@@ -109,7 +109,7 @@ chmod +x *.sh
 - Oh My Zsh + Powerlevel10k + autosuggestions + syntax-highlighting + completions
 - `.zshrc` (backup dulu kalo ada) + `.p10k.zsh`
 - `chsh` ke zsh, pacman aliases
-- fastfetch config, mise, opencode
+- mise, opencode
 - Foot sebagai default terminal
 - Fontconfig: ComicShannsMono Nerd Font monospace
 - Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main
@@ -170,14 +170,14 @@ chmod +x *.sh
 
 | Kategori | Package |
 |----------|---------|
-| Desktop | `nautilus gvfs* yazi neovim btop mpv imv evince easyeffects` |
-| Qt | `qt6-* pavucontrol` |
-| Utilitas | `tesseract imagemagick xdg-desktop-portal-gtk satty gum lazydocker gpu-screen-recorder dua-cli` |
-| Jaringan | `httpie bind whois traceroute mtr nmap github-cli` |
-| Apps | `telegram-desktop localsend zen-browser-bin zed protonplus ab-download-manager faugus-launcher android-studio zoom` |
+| Desktop | `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp nautilus-open-any-terminal yazi neovim btop mpv mpv-mpris imv evince gnome-disk-utility gnome-calculator easyeffects` |
+| Qt | `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol` |
+| Utilitas | `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava satty tldr gum lazydocker gpu-screen-recorder dua-cli bat eza fd` |
+| Jaringan | `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx` |
+| Apps | `telegram-desktop localsend zen-browser-bin zed font-manager protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition zoom` |
 | Gaming | `gamemode lib32-gamemode` |
-| Dev | `lazygit nodejs docker docker-buildx docker-compose` |
-| PHP | `php php-{gd,intl,pgsql,sqlite,fpm,tidy,imagick,redis,memcached,mongodb,apcu,igbinary,xsl} composer` |
+| Dev | `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu docker docker-buildx docker-compose` |
+| PHP | `php php-gd php-intl php-pgsql php-sqlite php-fpm php-tidy php-imagick php-redis php-memcached php-mongodb php-apcu php-igbinary php-xsl composer` |
 
 **Yang dilakukan:**
 - ASUS hardware auto-detect → install `asusctl` + `rog-control-center`
@@ -231,13 +231,15 @@ systemctl enable ufw
 Entry point: `~/.config/hypr/hyprland.lua`
 
 ```lua
+package.path = os.getenv("HOME") .. "/.config/hypr/?.lua;" .. package.path
+
 require("monitor")
 require("env")
-require("noctalia")
-dofile("colors.lua")
-dofile("windows/glass.lua")
-dofile("decorations/rounding-all-blur.lua")
-dofile("animations/wipe-meta.lua")
+require("noctalia").apply_theme()
+dofile(os.getenv("HOME") .. "/.config/hypr/colors.lua")
+dofile(os.getenv("HOME") .. "/.config/hypr/windows/glass.lua")
+dofile(os.getenv("HOME") .. "/.config/hypr/decorations/rounding-all-blur.lua")
+dofile(os.getenv("HOME") .. "/.config/hypr/animations/wipe-meta.lua")
 require("keybinds")
 require("rules")
 require("layouts")
@@ -462,7 +464,7 @@ Tersedia:
 `blur` • `default` • `gamemode` • `no-blur` • `no-rounding` • `no-rounding-more-blur` • `rounding` • `rounding-all-blur` • `rounding-all-blur-no-shadows` • `rounding-more-blur`
 
 ### Windows (`~/.config/hypr/windows/*.lua`)
-**14 preset** — `SUPER + CTRL + W`
+**14 preset** — `SUPER + CTRL + S`
 
 Default: **glass** — gaps_in 5, gaps_out 10, border 2px, gradient active border.
 
@@ -484,9 +486,17 @@ export PROTON_ENABLE_NGX_UPDATER=1         # DLSS auto-update
 exec switcherooctl launch -- gamemoderun mangohud "$@"
 ```
 
-### MangoHud
+### MangoHud (`~/.config/MangoHud/MangoHud.conf`)
 ```
-position=top-center | gpu_stats gpu_temp gpu_name | cpu_stats cpu_temp | ram fps frame_timing
+legacy_layout=false
+position=top-center
+gpu_stats gpu_temp gpu_name
+cpu_stats cpu_temp
+ram fps frame_timing
+font_size=15
+background_alpha=0
+hud_no_margin
+height=120
 ```
 
 ---
@@ -500,7 +510,7 @@ Script pembantu di `~/.config/hypr/scripts/`:
 | `keybindings.sh` | `SUPER + SHIFT + K` | Lihat semua keybind (rofi) |
 | `switch-animations.sh` | `SUPER + CTRL + A` | Ganti animasi |
 | `switch-decorations.sh` | `SUPER + CTRL + D` | Ganti dekorasi |
-| `switch-windows.sh` | `SUPER + CTRL + W` | Ganti window style |
+| `switch-windows.sh` | `SUPER + CTRL + S` | Ganti window style |
 | `toggle-animations.sh` | `SUPER + SHIFT + A` | Animasi on/off |
 | `text-extractor.sh` | `SUPER + ALT + A` | OCR area → clipboard |
 | `game-launch.sh` | Steam launch option | NVIDIA optimasi + gamemode + MangoHud |
