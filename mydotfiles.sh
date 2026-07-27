@@ -19,6 +19,10 @@ trap 'log_err "Failed at line ${LINENO}: ${BASH_COMMAND}"' ERR
 HYPR_SRC="${SCRIPT_DIR}/dotfiles/hypr"
 HYPR_DST="${HOME}/.config/hypr"
 
+preflight() {
+    [[ "$(id -u)" -ne 0 ]] || { log_err "Do not run as root."; exit 1; }
+}
+
 copy_dotfiles() {
     log_info "Copying hypr dotfiles..."
     mkdir -p "$HYPR_DST"
@@ -27,37 +31,35 @@ copy_dotfiles() {
     hyprctl reload 2>/dev/null && log_ok "Hyprland reloaded." || log_warn "Hyprland not running, reload skipped."
 }
 
-check_chaotic_aur() {
-    if ! pacman -Qi chaotic-keyring &>/dev/null; then
-        echo -e "${YELLOW}Chaotic-AUR repo belum terinstall.${NC}"
-        echo -e "  Gaming mode butuh package dari Chaotic-AUR (gamescope-session-git)."
-        echo -e "  - Fresh install: jalanin ./install.sh dulu (setup Chaotic-AUR otomatis)"
-        echo -e "  - Manual: https://aur.chaotic.cx/docs/install"
-        echo ""
-        read -r -p "$(echo -e "${CYAN}[INPUT]${NC}  Tetap lanjut gaming mode? (y/N): ")" ans
-        case "$ans" in
-            [yY]|[yY][eE][sS])
-                log_warn "Melanjutkan tanpa Chaotic-AUR — gaming.sh mungkin gagal."
-                return 0
-                ;;
-            *)
-                log_info "Batal install gaming mode."
-                return 1
-                ;;
-        esac
+setup_chaotic_aur() {
+    if pacman -Qi chaotic-keyring &>/dev/null; then
+        log_ok "Chaotic-AUR already configured."
+        return 0
     fi
+    log_info "Setting up Chaotic-AUR (binary repo mirror)..."
+    sudo -n true 2>/dev/null || sudo -v
+    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com 2>/dev/null || true
+    sudo pacman-key --lsign-key 3056513887B78AEB 2>/dev/null || true
+    sudo pacman -U --noconfirm \
+        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 2>/dev/null
+    if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf 2>/dev/null; then
+        echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf >/dev/null
+    fi
+    sudo pacman -Sy --noconfirm 2>/dev/null
+    log_ok "Chaotic-AUR configured."
 }
 
 install_gaming() {
     echo ""
     echo -e "${YELLOW}Install gaming mode (DeckShift session switch)?${NC}"
-    echo -e "  Ini akan menginstall gamescope-session-git, script session,"
-    echo -e "  konfigurasi SDDM, permissions, dan performance tuning."
+    echo -e "  Gaming mode butuh Chaotic-AUR repo + gamescope-session-git."
+    echo -e "  Semua akan diinstall otomatis."
     read -r -p "$(echo -e "${CYAN}[INPUT]${NC}  Lanjut? (y/N): ")" ans
     case "$ans" in
         [yY]|[yY][eE][sS])
-            check_chaotic_aur || return 0
             log_info "Installing gaming mode..."
+            setup_chaotic_aur
             if [[ -x "${SCRIPT_DIR}/gaming.sh" ]]; then
                 "${SCRIPT_DIR}/gaming.sh"
                 log_ok "Gaming mode installed."
@@ -73,6 +75,7 @@ install_gaming() {
 }
 
 main() {
+    preflight
     [[ -d "$HYPR_SRC" ]] || { log_err "hypr dotfiles not found at $HYPR_SRC"; exit 1; }
     copy_dotfiles
     install_gaming
