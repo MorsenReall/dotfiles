@@ -1,20 +1,20 @@
 <p align="center">
-  <a href="README.id.md">🇮🇩 Bahasa Indonesia</a>
+  <a href="README.md">🇬🇧 English</a>
 </p>
 
 # CachyOS My Dotfiles
 
-Personal dotfiles + installer scripts for **ASUS TUF Gaming A15 FA506ICB** — AMD Renoir + NVIDIA RTX 3050.
+Personal dotfiles + installer scripts untuk **ASUS TUF Gaming A15 FA506ICB** — AMD Renoir + NVIDIA RTX 3050.
 
-**Current:** Hyprland (stable, Lua API) + Noctalia Shell v5
+**Saat ini:** Hyprland (stable, Lua API) + Noctalia Shell v5
 
-> **Version:** 2.0 | Updated: 2026-07-27
+> **Versi:** 2.0 | Diperbarui: 2026-07-27
 
 ---
 
-## Table of Contents
+## Daftar Isi
 
-- [Dotfiles — Config Only (Safe)](#dotfiles--config-only-safe)
+- [Dotfiles — Config Saja (Aman)](#dotfiles--config-saja-aman)
 - [Installer — Fresh OS](#installer--fresh-os)
 - [Hyprland Config](#hyprland-config)
 - [Keybindings](#keybindings)
@@ -28,17 +28,17 @@ Personal dotfiles + installer scripts for **ASUS TUF Gaming A15 FA506ICB** — A
 
 ---
 
-## Dotfiles — Config Only (Safe)
+## Dotfiles — Config Saja (Aman)
 
-> **Only copies hypr files to `~/.config/hypr/`** — no package installs, no sudo, no system changes.
-> For users who already have Hyprland + Noctalia and just want this config.
+> **Cuma copy file hypr ke `~/.config/hypr/`** — gak install package, gak perlu sudo, gak ubah system.
+> Cocok buat yang udah punya Hyprland + Noctalia, tinggal pake config ini.
 
-### Prerequisites
+### Persyaratan
 
-These must already be installed on your system:
+Yang harus udah terinstall di system:
 
-| Requirement | Example Package |
-|-------------|----------------|
+| Kebutuhan | Contoh Package |
+|-----------|---------------|
 | Hyprland + Noctalia Shell | `hyprland noctalia` |
 | Rofi (preset switcher) | `rofi` |
 | Terminal | `foot` |
@@ -47,7 +47,7 @@ These must already be installed on your system:
 | Icon Theme | `tela-icon-theme` (Tela-nord-dark) |
 | GTK Theme | `nordic-theme` |
 
-### Usage
+### Cara Pakai
 
 ```bash
 git clone https://github.com/tofan79/cachyos-mydotfiles.git
@@ -56,22 +56,22 @@ chmod +x mydotfiles.sh
 ./mydotfiles.sh
 ```
 
-You will be prompted: **Install gaming mode? (y/N)**
-- `y` → auto-installs **Chaotic-AUR** (if missing) → runs `gaming.sh` (requires sudo)
-- `n` or Enter → skip, 100% safe
+Nanti di-prompt: **Install gaming mode? (y/N)**
+- `y` → auto-install **Chaotic-AUR** (kalo belum ada) → jalanin `gaming.sh` (butuh sudo)
+- `n` atau Enter → skip, aman 100%
 
-### What Gets Copied
+### Yang Di-copy
 
-| From | To |
-|------|-----|
+| Dari | Ke |
+|------|----|
 | `dotfiles/hypr/` | `~/.config/hypr/` |
-| Default preset (animations, decorations, windows) | Applied immediately after `hyprctl reload` |
+| Default preset (animations, decorations, windows) | Langsung teraplikasi setelah `hyprctl reload` |
 
 ---
 
 ## Installer — Fresh OS
 
-> **For fresh Arch/CachyOS installs.** Run step by step.
+> **Buat yang install Arch/CachyOS dari awal.** Jalanin step by step biar system sama persis.
 
 ```bash
 git clone https://github.com/tofan79/cachyos-mydotfiles.git
@@ -79,23 +79,23 @@ cd cachyos-mydotfiles
 chmod +x *.sh
 ```
 
-| Step | Script | Description |
-|------|--------|-------------|
-| 1 | `./install.sh` | **Core OS** — packages, fonts, themes, Zsh + P10k, mise, opencode, Flatpak, non-Hyprland dotfiles |
-| 2 | `./hyprland-noctalia.sh` | **Desktop WM** — Hyprland, Noctalia, SDDM, rofi, polkit fix, Hyprland dotfiles |
-| 3 | `./apps.sh` | **Applications** — Nautilus, Zen, Neovim, tmux, Yazi, Docker, PHP stack, ASUS tools, bloat removal |
+| Step | Script | Fungsi |
+|------|--------|--------|
+| 1 | `./install.sh` | **Core OS** — package dasar, fonts, themes, Zsh + P10k, mise, opencode, Flatpak, dotfiles non-Hyprland |
+| 2 | `./hyprland-noctalia.sh` | **Desktop WM** — Hyprland, Noctalia, SDDM, rofi, polkit fix, dotfiles Hyprland |
+| 3 | `./apps.sh` | **Aplikasi** — Nautilus, Zen, Neovim, tmux, Yazi, Docker, PHP stack, ASUS tools, bloat removal |
 | 4 | `./gaming.sh` | **Gaming** — DeckShift session switch, performance tuning |
 | 5 | `sudo ./firewall.sh` | **Firewall** — UFW deny incoming, allow LocalSend |
-| 6 | `./fix-audio.sh` (optional) | **ASUS audio fix** — ALC256 mic/audio, WirePlumber + systemd. ASUS TUF/ROG only. Skip if not ASUS. |
+| 6 | `./fix-audio.sh` (opsional) | **ASUS audio fix** — ALC256 mic/audio, WirePlumber + systemd. Khusus ASUS TUF/ROG. Skip kalo bukan ASUS. |
 
 ---
 
 ### Step 1: `install.sh` — Core OS
 
-**Packages:**
+**Package yang diinstall:**
 
-| Category | Packages |
-|----------|----------|
+| Kategori | Package |
+|----------|---------|
 | Dev Tools | `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak` |
 | Display/WM | `foot` |
 | CLI | `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors ddcutil dua-cli` |
@@ -103,27 +103,27 @@ chmod +x *.sh
 | Theme | `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme nordic-theme bibata-cursor-theme tela-icon-theme` |
 | Multimedia | `gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav x264 x265` |
 | FS Tools | `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump` |
-| Other | `gnome-keyring` |
+| Lain | `gnome-keyring` |
 
-**Setup:**
+**Yang di-setup:**
 - Flatpak + Flathub + OBS Studio + Karere
 - Tela icon theme → Tela-nord-dark
 - Bibata cursor → Bibata-Modern-Ice
 - JetBrainsMono + FiraCode Nerd Font (manual download)
 - Oh My Zsh + Powerlevel10k + autosuggestions + syntax-highlighting + completions
-- `.zshrc` (backup if exists) + `.p10k.zsh`
-- `chsh` to zsh, pacman aliases
+- `.zshrc` (backup dulu kalo ada) + `.p10k.zsh`
+- `chsh` ke zsh, pacman aliases
 - mise, opencode
-- Foot as default terminal
+- Foot sebagai default terminal
 - Fontconfig: ComicShannsMono Nerd Font monospace
 - Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main
 - Sensors auto-detect
 - `gnome-keyring-daemon.service` enable
 
-**Copied to `~/.config/`:**
+**Yang di-copy ke `~/.config/`:**
 
-| Dotfiles | Contents |
-|----------|----------|
+| Dotfiles | Isi |
+|----------|-----|
 | `foot/` | Font, alpha, grapheme-shaping |
 | `fontconfig/` | Font fallbacks |
 | `git/` | Git config |
@@ -140,7 +140,7 @@ chmod +x *.sh
 | `Wallpapers/` | → `~/Pictures/Wallpapers/` |
 | `docker-db/` | → `~/Projects/docker-db/` |
 
-> **Note:** `fix-audio.sh` runs automatically on ASUS laptops. Can also run standalone: `./fix-audio.sh [--force|--uninstall]`
+> **Catatan:** `fix-audio.sh` otomatis jalan untuk ASUS laptop. Bisa jalan standalone: `./fix-audio.sh [--force|--uninstall]`
 
 ---
 
@@ -148,17 +148,17 @@ chmod +x *.sh
 
 **Package:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control noctalia gnome-keyring`
 
-**What it does:**
-- Enable SDDM as display manager
-- Enable `switcheroo-control` (NVIDIA dGPU switching)
+**Yang dilakukan:**
+- SDDM enable sebagai display manager
+- `switcheroo-control` enable (NVIDIA dGPU switching)
 - Session file: `/usr/share/wayland-sessions/hyprland.desktop` → "Hyprland (Noctalia)"
 - Polkit fix: `/etc/polkit-1/rules.d/49-networkmanager.rules`
 - Noctalia state: `settings.toml` path fix (`/home/mindset` → `$HOME`) + copy sounds
 
-**Copied to `~/.config/`:**
+**Yang di-copy ke `~/.config/`:**
 
-| Dotfiles | Contents |
-|----------|----------|
+| Dotfiles | Isi |
+|----------|-----|
 | `hypr/` | Full Hyprland Lua config + presets + scripts |
 | `rofi/` | Noctalia theme |
 | `xdg-desktop-portal/` | default=hyprland |
@@ -168,54 +168,54 @@ chmod +x *.sh
 
 ---
 
-### Step 3: `apps.sh` — Applications
+### Step 3: `apps.sh` — Aplikasi
 
-**Packages:**
+**Package:**
 
-| Category | Packages |
-|----------|----------|
+| Kategori | Package |
+|----------|---------|
 | Desktop | `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp nautilus-open-any-terminal yazi neovim btop mpv mpv-mpris imv evince gnome-disk-utility gnome-calculator easyeffects` |
 | Qt | `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol` |
-| Utilities | `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava satty tldr gum lazydocker gpu-screen-recorder dua-cli bat eza fd` |
-| Network | `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx` |
+| Utilitas | `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava satty tldr gum lazydocker gpu-screen-recorder dua-cli bat eza fd` |
+| Jaringan | `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx` |
 | Apps | `telegram-desktop localsend zen-browser-bin zed font-manager protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition zoom` |
 | Gaming | `gamemode lib32-gamemode` |
 | Dev | `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu docker docker-buildx docker-compose` |
 | PHP | `php php-gd php-intl php-pgsql php-sqlite php-fpm php-tidy php-imagick php-redis php-memcached php-mongodb php-apcu php-igbinary php-xsl composer` |
 
-**What it does:**
+**Yang dilakukan:**
 - ASUS hardware auto-detect → install `asusctl` + `rog-control-center`
-- Desktop file fix: btop, nvim, yazi → run in Foot
+- Desktop file fix: btop, nvim, yazi → jalan di Foot
 - Nautilus → Open in Terminal (foot)
-- Docker enable + add user to docker group
-- Desktop entries + icons for lazydocker + dua
+- Docker enable + user ke docker group
+- Desktop entries + icons untuk lazydocker + dua
 - tmux config (C-Space prefix, vi mode)
-- PHP: deploy `dotfiles/php/php.ini` + `conf.d/*` to `/etc/php/`
+- PHP: deploy `dotfiles/php/php.ini` + `conf.d/*` ke `/etc/php/`
 - Laravel installer via Composer
-- Remove CachyOS bloat: micro, alacritty, meld, cachyos-micro-settings
-- Hide unused desktop entries
+- Hapus bloat CachyOS: micro, alacritty, meld, cachyos-micro-settings
+- Sembunyiin desktop entries gak kepake
 
 ---
 
 ### Step 4: `gaming.sh` — DeckShift
 
-**Gaming session switch** — Steam Deck-style toggle between Hyprland desktop and gaming session (gamescope + Steam Big Picture).
+**Gaming session switch** — ala Steam Deck. Bisa ganti-ganti antara desktop Hyprland sama session gaming (gamescope + Steam Big Picture).
 
-> **Compatible with:** SDDM, GDM, LightDM, greetd, Ly — auto-detects display manager.
+> **Kompatibel dengan:** SDDM, GDM, LightDM, greetd, Ly — auto-detect display manager.
 
-**Installs:**
-- `gamescope-session-git` (from chaotic-aur binary repo)
-- Session scripts to `/usr/local/bin/`
-- Autologin config for detected display manager
+**Yang diinstall:**
+- `gamescope-session-git` (dari chaotic-aur binary repo)
+- Script session ke `/usr/local/bin/`
+- Autologin config sesuai display manager yang terdeteksi
 - Performance: udev rules, memlock limits, pipewire latency, shader cache, NVIDIA env
 
-**Usage:**
-| Key | Action |
-|-----|--------|
-| `SUPER + SHIFT + G` | Switch to gaming session |
-| `SUPER + SHIFT + R` | Return to desktop |
+**Cara pake:**
+| Tombol | Fungsi |
+|--------|--------|
+| `SUPER + SHIFT + G` | Switch ke gaming session |
+| `SUPER + SHIFT + R` | Balik ke desktop |
 
-> `gamescope-session-steam-git` is skipped (duplicates SDDM entry).
+> `gamescope-session-steam-git` di-skip (duplikat entry di SDDM).
 
 ---
 
@@ -324,19 +324,19 @@ end)
 
 ## Keybindings
 
-All binds use `SUPER` (Windows key). View on screen: `SUPER + SHIFT + K`
+Semua pake `SUPER` (Windows key). Lihat langsung di layar: `SUPER + SHIFT + K`
 
 ### Core
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
-| `SUPER + Q` | Close window |
+| `SUPER + Q` | Tutup window |
 | `SUPER + CTRL + R` | Reload Hyprland |
 | `SUPER + Escape` | Session menu (Noctalia) |
 | `SUPER + SHIFT + L` | Lock screen |
 | `SUPER + /` | Btop (system monitor) |
 
 ### Noctalia Shell
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
 | `SUPER + Space` | App launcher |
 | `SUPER + ALT + Space` | Control center |
@@ -350,14 +350,14 @@ All binds use `SUPER` (Windows key). View on screen: `SUPER + SHIFT + K`
 | `SUPER + CTRL + P` | Color picker |
 
 ### Focus & Swap
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
-| `SUPER + arrows` | Move focus |
-| `SUPER + SHIFT + arrows` | Swap windows |
-| `SUPER + CTRL + up/down` | Previous/next workspace |
+| `SUPER + arrows` | Pindah fokus |
+| `SUPER + SHIFT + arrows` | Tukar posisi window |
+| `SUPER + CTRL + up/down` | Workspace sebelumnya/selanjutnya |
 
 ### Window States
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
 | `SUPER + F` | Fullscreen toggle |
 | `SUPER + SHIFT + F` | Maximize toggle |
@@ -365,40 +365,40 @@ All binds use `SUPER` (Windows key). View on screen: `SUPER + SHIFT + K`
 | `SUPER + ALT + T` | Float + pin |
 
 ### Scratchpad
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
 | `SUPER + S` | Toggle special workspace |
-| `SUPER + SHIFT + S` | Send to special |
-| `SUPER + SHIFT + CTRL + S` | Move out of special |
+| `SUPER + SHIFT + S` | Kirim window ke special |
+| `SUPER + SHIFT + CTRL + S` | Keluarkan dari special |
 
 ### Layout
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
-| `SUPER + CTRL + L` | Cycle layout (dwindle/scrolling/master/monocle) |
+| `SUPER + CTRL + L` | Ganti layout (dwindle/scrolling/master/monocle) |
 | `SUPER + CTRL + K` | Swap split |
 | `SUPER + CTRL + J` | Toggle split |
 
 ### Groups
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
 | `SUPER + SHIFT + G` | Toggle group |
-| `SUPER + CTRL + G` | Leave group |
-| `SUPER + CTRL + [` / `]` | Into group left/right |
-| `SUPER + ALT + [` / `]` | Into group up/down |
-| `SUPER + CTRL + 1-5` | Select group index |
-| `SUPER + Tab` / `SHIFT + Tab` | Next/previous group |
+| `SUPER + CTRL + G` | Keluar dari group |
+| `SUPER + CTRL + [` / `]` | Masuk group kiri/kanan |
+| `SUPER + ALT + [` / `]` | Masuk group atas/bawah |
+| `SUPER + CTRL + 1-5` | Pilih group index |
+| `SUPER + Tab` / `SHIFT + Tab` | Group berikutnya/sebelumnya |
 
 ### Presets (Rofi)
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
-| `SUPER + CTRL + A` | Switch animation preset |
-| `SUPER + CTRL + D` | Switch decoration preset |
-| `SUPER + CTRL + S` | Switch window preset |
-| `SUPER + SHIFT + A` | Toggle animations on/off |
+| `SUPER + CTRL + A` | Ganti animasi |
+| `SUPER + CTRL + D` | Ganti dekorasi |
+| `SUPER + CTRL + S` | Ganti window style |
+| `SUPER + SHIFT + A` | Animasi on/off |
 
 ### App Launchers
-| Key | App |
-|-----|-----|
+| Key | Aplikasi |
+|-----|----------|
 | `SUPER + Enter` | Foot terminal |
 | `SUPER + E` | Nautilus |
 | `SUPER + B` | Zen browser |
@@ -414,92 +414,92 @@ All binds use `SUPER` (Windows key). View on screen: `SUPER + SHIFT + K`
 | `SUPER + ALT + G` | Gaming mode switch |
 
 ### Workspaces
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
-| `SUPER + 1-9` | Switch workspace |
-| `SUPER + SHIFT + 1-9` | Move window to workspace |
-| `SUPER + scroll` | Previous/next workspace |
+| `SUPER + 1-9` | Pindah workspace |
+| `SUPER + SHIFT + 1-9` | Pindahin window ke workspace |
+| `SUPER + scroll` | Workspace sebelumnya/selanjutnya |
 
 ### Media Keys
-Volume, brightness, playback via Noctalia. `XF86Sleep` → lock & suspend.
+Volume, brightness, playback lewat Noctalia. `XF86Sleep` → lock & suspend.
 
 ### Multi-Monitor
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
-| `SUPER + CTRL + ALT + arrows` | Focus monitor |
-| `+ SHIFT` + above | Move window to monitor |
+| `SUPER + CTRL + ALT + arrows` | Fokus monitor |
+| `+ SHIFT` + di atas | Pindahin window ke monitor |
 
 ### Resize & Move
-| Key | Action |
+| Key | Fungsi |
 |-----|--------|
 | `CTRL + ALT + arrows` | Resize window |
-| `CTRL + SHIFT + arrows` | Move floating window |
+| `CTRL + SHIFT + arrows` | Gerakin floating window |
 
 ### Mouse
-| Key | Action |
-|-----|--------|
+| Tombol | Fungsi |
+|--------|--------|
 | `SUPER + left click` | Drag window |
 | `SUPER + right click` | Resize window |
 | `Middle click` | Maximize toggle |
 
-### Other
-| Key | Action |
+### Lain
+| Key | Fungsi |
 |-----|--------|
 | `ALT + Tab` | Cycle tiled windows |
 
-### App Prerequisites
+### Persiapan Apps untuk Keybind
 
-Some keybinds launch specific apps. If the app is not installed, the keybind won't work:
+Beberapa keybind panggil aplikasi tertentu. Kalo aplikasi belum terinstall, keybind gak bakal jalan:
 
-| Keybind | App | Package (Arch) | Installed By |
-|---------|-----|---------------|-------------|
+| Keybind | Aplikasi | Package (Arch) | Install lewat |
+|---------|----------|---------------|---------------|
 | `SUPER + Enter` | Foot (terminal) | `foot` | `install.sh` step 1 |
 | `SUPER + E` | Nautilus (file manager) | `nautilus` | `apps.sh` step 3 |
 | `SUPER + B` | Zen Browser | `zen-browser-bin` | `apps.sh` step 3 |
 | `SUPER + N` | Zed Editor | `zed` | `apps.sh` step 3 |
 | `SUPER + L` | LocalSend | `localsend` | `apps.sh` step 3 |
 | `SUPER + T` | Telegram | `telegram-desktop` | `apps.sh` step 3 |
-| `SUPER + W` | Karere | Flatpak from Flathub | `install.sh` step 1 |
+| `SUPER + W` | Karere | Flatpak dari Flathub | `install.sh` step 1 |
 | `SUPER + D` | Vesktop (Discord) | `vesktop` | `apps.sh` step 3 |
 | `SUPER + G` | Steam | `steam` | `apps.sh` step 3 |
 | `SUPER + A` | AionUI | `/opt/AionUi/AionUi` | `apps.sh` step 3 |
 | `SUPER + U` | AB Download Manager | `ab-download-manager` | `apps.sh` step 3 |
 | `SUPER + P` | ProtonPlus | `protonplus` | `apps.sh` step 3 |
 | `SUPER + ALT + G` | Gaming mode switch | `gamescope-session-git` | `gaming.sh` step 4 |
-| `SUPER + SHIFT + K` | Keybind viewer | (built-in script) | dotfiles only |
+| `SUPER + SHIFT + K` | Keybind viewer | (built-in script) | dotfiles aja |
 | `SUPER + /` | Btop (system monitor) | `btop` | `install.sh` step 1 |
 
-> Core keybinds (focus, swap, window states, groups, layout, workspace, mouse) use Hyprland built-ins — no extra apps needed.
-> Gaming mode auto-detects your display manager (SDDM/GDM/LightDM/greetd/Ly).
+> Core keybind (focus, swap, window states, groups, layout, workspace, mouse) pake Hyprland built-in — gak butuh apps tambahan.
+> Gaming mode auto-detect display manager (SDDM/GDM/LightDM/greetd/Ly) — gak wajib SDDM lagi.
 
 ---
 
 ## Presets
 
-Switch window styles without reloading config — using Rofi (`SUPER + CTRL + A/D/S`).
+Ganti-ganti gaya window tanpa reload config — pake Rofi (`SUPER + CTRL + A/D/S`).
 
 ### Animations (`~/.config/hypr/animations/*.lua`)
-**16 presets** — `SUPER + CTRL + A`
+**16 preset** — `SUPER + CTRL + A`
 
 Default: **wipe-meta** — borderangle wipe, speed 20.
 
-Available:
+Tersedia:
 `animations-classic` • `animations-dynamic` • `animations-end4` • `animations-fast` • `animations-high` • `animations-moving` • `animations-smooth` • `default` • `disabled` • `metamorphosis` • `moving-meta` • `slide` • `smooth-meta` • `standard` • `wipe` • `wipe-meta`
 
 ### Decorations (`~/.config/hypr/decorations/*.lua`)
-**10 presets** — `SUPER + CTRL + D`
+**10 preset** — `SUPER + CTRL + D`
 
 Default: **rounding-all-blur** — rounding 10px, opacity 0.9/0.7, blur 2/2, shadow range 30.
 
-Available:
+Tersedia:
 `blur` • `default` • `gamemode` • `no-blur` • `no-rounding` • `no-rounding-more-blur` • `rounding` • `rounding-all-blur` • `rounding-all-blur-no-shadows` • `rounding-more-blur`
 
 ### Windows (`~/.config/hypr/windows/*.lua`)
-**14 presets** — `SUPER + CTRL + S`
+**14 preset** — `SUPER + CTRL + S`
 
 Default: **glass** — gaps_in 5, gaps_out 10, border 2px, gradient active border.
 
-Available:
+Tersedia:
 `border-1..4` • `border-1..4-reverse` • `default` • `gamemode` • `glass` • `no-border` • `no-border-more-gaps` • `transparent`
 
 ---
@@ -508,7 +508,7 @@ Available:
 
 ### game-launch.sh
 
-Steam launch option: `~/.config/hypr/scripts/game-launch.sh %command%`
+Launch option Steam: `~/.config/hypr/scripts/game-launch.sh %command%`
 
 ```bash
 export NVPRESENT_ENABLE_SMOOTH_MOTION=1    # NVIDIA frame gen
@@ -534,17 +534,17 @@ height=120
 
 ## Scripts
 
-Helper scripts in `~/.config/hypr/scripts/`:
+Script pembantu di `~/.config/hypr/scripts/`:
 
-| Script | Call | Function |
-|--------|------|----------|
-| `keybindings.sh` | `SUPER + SHIFT + K` | View all keybinds (rofi) |
-| `switch-animations.sh` | `SUPER + CTRL + A` | Switch animation preset |
-| `switch-decorations.sh` | `SUPER + CTRL + D` | Switch decoration preset |
-| `switch-windows.sh` | `SUPER + CTRL + S` | Switch window preset |
-| `toggle-animations.sh` | `SUPER + SHIFT + A` | Toggle animations on/off |
+| Script | Panggilan | Fungsi |
+|--------|-----------|--------|
+| `keybindings.sh` | `SUPER + SHIFT + K` | Lihat semua keybind (rofi) |
+| `switch-animations.sh` | `SUPER + CTRL + A` | Ganti animasi |
+| `switch-decorations.sh` | `SUPER + CTRL + D` | Ganti dekorasi |
+| `switch-windows.sh` | `SUPER + CTRL + S` | Ganti window style |
+| `toggle-animations.sh` | `SUPER + SHIFT + A` | Animasi on/off |
 | `text-extractor.sh` | `SUPER + ALT + A` | OCR area → clipboard |
-| `game-launch.sh` | Steam launch option | NVIDIA optimizations + gamemode + MangoHud |
+| `game-launch.sh` | Steam launch option | NVIDIA optimasi + gamemode + MangoHud |
 | `lock-and-suspend.sh` | `XF86Sleep` | Lock + suspend |
 
 ---
@@ -565,10 +565,10 @@ Helper scripts in `~/.config/hypr/scripts/`:
 
 ## Dotfiles Reference
 
-Full list of dotfile directories, which script copies them, and their contents:
+Daftar lengkap folder dotfiles, di-copy oleh script mana, dan isinya:
 
-| Folder | Script | Contents |
-|--------|--------|----------|
+| Folder | Script | Isi |
+|--------|--------|-----|
 | `hypr/` | `mydotfiles.sh` / `hyprland-noctalia.sh` | Full Hyprland Lua config + presets + scripts |
 | `rofi/` | `hyprland-noctalia.sh` | Noctalia theme |
 | `xdg-desktop-portal/` | `hyprland-noctalia.sh` | default=hyprland |
@@ -590,7 +590,7 @@ Full list of dotfile directories, which script copies them, and their contents:
 | `easyeffects/` | `install.sh` | Audio EQ presets |
 | `environment.d/` | `install.sh` | Steam/gamescope env vars |
 | `clean/` | `install.sh` | System cleanup script |
-| `php/` | `apps.sh` | php.ini + conf.d (to /etc/php/) |
+| `php/` | `apps.sh` | php.ini + conf.d (ke /etc/php/) |
 | `gaming-mode/` | `gaming.sh` | DeckShift session configs |
 | `tmux/` | `apps.sh` | C-Space prefix, vi mode |
 | `Wallpapers/` | `install.sh` | Background images |
@@ -604,16 +604,16 @@ Full list of dotfile directories, which script copies them, and their contents:
 ~/.config/clean/clean.sh
 ```
 
-Cleans: pacman cache, orphans, Flatpak, Go/pip/npm/Cargo cache, mise, temp, journal (>3d), trash, browser cache, shader cache, Qt/GTK cache, Zed cache, zsh history, thumbnails.
+Bersihin: pacman cache, orphans, Flatpak, Go/pip/npm/Cargo cache, mise, temp, journal (>3d), trash, browser cache, shader cache, Qt/GTK cache, Zed cache, zsh history, thumbnails.
 
 ---
 
 ## Notes
 
-- **Runtime config:** `hyprctl eval "hl.config({...})"` — correct way for Hyprland Lua API runtime config
+- **Runtime config:** `hyprctl eval "hl.config({...})"` — cara bener di Hyprland Lua API
 - **Noctalia colors:** Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies via text parsing
-- **Session name:** "Hyprland (Noctalia)" in any display manager
-- **Audio fix:** `fix-audio.sh` — portable, standalone. Automatic for ASUS.
+- **Session name:** "Hyprland (Noctalia)" di display manager manapun
+- **Audio fix:** `fix-audio.sh` — portable, jalan standalone. Otomatis untuk ASUS.
 - **Package sources:** CachyOS official repos + Chaotic-AUR binary mirror via pacman
 
 ---
@@ -622,7 +622,7 @@ Cleans: pacman cache, orphans, Flatpak, Go/pip/npm/Cargo cache, mise, temp, jour
 
 | Project | Source |
 |---------|--------|
-| Animation presets (16 presets) | [ML4W](https://github.com/mylinuxforwork/dotfiles) |
+| Animation presets (16 preset) | [ML4W](https://github.com/mylinuxforwork/dotfiles) |
 | DeckShift gaming session | [github.com/28allday/deckshift](https://github.com/28allday/deckshift) |
 | Noctalia Shell | [github.com/noctalia-dev/noctalia](https://github.com/noctalia-dev/noctalia) |
 | Hyprland | [hyprland.org](https://hyprland.org)
