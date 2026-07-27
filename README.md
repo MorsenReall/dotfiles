@@ -36,7 +36,7 @@
 </p>
 
 <p align="center">
-  <sup>▶️ <i>Tour video coming soon on YouTube</i></sup>
+  <sup>▶️ <i>Video demo coming soon on YouTube</i></sup>
 </p>
 
 ---
