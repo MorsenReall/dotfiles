@@ -24,15 +24,15 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/desktop.png?v=2" width="800" alt="Desktop">
+  <img src="assets/screenshots/ss-desktop.png" width="800" alt="Desktop">
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/rofi.png?v=2" width="400" alt="Rofi Launcher">
-  <img src="assets/screenshots/presets.png?v=2" width="400" alt="Rofi Presets">
+  <img src="assets/screenshots/ss-rofi.png" width="400" alt="Rofi Launcher">
+  <img src="assets/screenshots/ss-presets.png" width="400" alt="Rofi Presets">
   <br>
-  <img src="assets/screenshots/btop.png?v=2" width="400" alt="Btop System Monitor">
-  <img src="assets/screenshots/launcher.png?v=2" width="400" alt="App Launcher">
+  <img src="assets/screenshots/ss-btop.png" width="400" alt="Btop System Monitor">
+  <img src="assets/screenshots/ss-launcher.png" width="400" alt="App Launcher">
 </p>
 
 <p align="center">
