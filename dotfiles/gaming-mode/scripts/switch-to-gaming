@@ -1,5 +1,5 @@
 #!/bin/bash
-# Save asusctl profile BEFORE SDDM restart (wrapper runs after, where asusctl has changed)
+# Save asusctl profile BEFORE DM restart (wrapper runs after, where asusctl has changed)
 asusctl profile get 2>/dev/null | grep -oP 'Active profile: \K\w+' > /tmp/.pre-gaming-asusctl || true
 sudo -n systemctl mask --runtime sleep.target suspend.target hibernate.target hybrid-sleep.target 2>/dev/null
 sudo -n /usr/local/bin/gaming-session-switch gaming 2>/dev/null || {
@@ -24,4 +24,4 @@ if [[ -f "$ENV_CONF" ]]; then
 fi
 sudo -n chvt 2 2>/dev/null || true
 sleep 0.3
-sudo -n systemctl restart sddm
+sudo -n /usr/local/bin/gaming-dm-ctl restart

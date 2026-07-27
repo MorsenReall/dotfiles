@@ -53,7 +53,7 @@ chmod +x mydotfiles.sh
 ```
 
 Nanti di-prompt: **Install gaming mode? (y/N)**
-- `y` → auto-install **Chaotic-AUR** (kalo belum ada) → jalanin `gaming.sh` (butuh sudo + **wajib SDDM**)
+- `y` → auto-install **Chaotic-AUR** (kalo belum ada) → jalanin `gaming.sh` (butuh sudo)
 - `n` atau Enter → skip, aman 100%
 
 ### Yang Di-copy
@@ -197,12 +197,12 @@ chmod +x *.sh
 
 **Gaming session switch** — ala Steam Deck. Bisa ganti-ganti antara desktop Hyprland sama session gaming (gamescope + Steam Big Picture).
 
-> **Requirement:** Wajib pake **SDDM** sebagai display manager. Gaming session entry cuma bisa lewat SDDM.
+> **Kompatibel dengan:** SDDM, GDM, LightDM, greetd, Ly — auto-detect display manager.
 
 **Yang diinstall:**
 - `gamescope-session-git` (dari chaotic-aur binary repo)
 - Script session ke `/usr/local/bin/`
-- SDDM gaming session entry
+- Autologin config sesuai display manager yang terdeteksi
 - Performance: udev rules, memlock limits, pipewire latency, shader cache, NVIDIA env
 
 **Cara pake:**
@@ -466,6 +466,7 @@ Beberapa keybind panggil aplikasi tertentu. Kalo aplikasi belum terinstall, keyb
 | `SUPER + /` | Btop (system monitor) | `btop` | `install.sh` step 1 |
 
 > Core keybind (focus, swap, window states, groups, layout, workspace, mouse) pake Hyprland built-in — gak butuh apps tambahan.
+> Gaming mode auto-detect display manager (SDDM/GDM/LightDM/greetd/Ly) — gak wajib SDDM lagi.
 
 ---
 

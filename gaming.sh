@@ -54,26 +54,49 @@ install_scripts() {
     fi
 }
 
-setup_sddm() {
-    log_info "Configuring SDDM..."
+setup_dm() {
+    local dm
+    dm=$(/usr/local/bin/gaming-dm-ctl detect 2>/dev/null || echo "none")
+
+    log_info "Display manager detected: ${dm}"
+
+    # Install session file (works for all DMs)
     if [[ -f "$GM_DIR/sddm/gamescope-session-steam-nm.desktop" ]]; then
         sudo install -m 644 "$GM_DIR/sddm/gamescope-session-steam-nm.desktop" /usr/share/wayland-sessions/
+        log_ok "Gaming session file installed"
     fi
 
-    local autologin_user="$USER"
-    if [[ -f /etc/sddm.conf.d/autologin.conf ]]; then
-        autologin_user=$(sed -n 's/^User=//p' /etc/sddm.conf.d/autologin.conf 2>/dev/null | head -1)
-        [[ -z "$autologin_user" ]] && autologin_user="$USER"
-    fi
-    if [[ -f "$GM_DIR/sddm/zz-gaming-session.conf" ]]; then
-        sudo install -m 644 "$GM_DIR/sddm/zz-gaming-session.conf" /etc/sddm.conf.d/
-        if grep -q "^User=" /etc/sddm.conf.d/zz-gaming-session.conf 2>/dev/null; then
-            sudo sed -i "s/^User=.*/User=${autologin_user}/" /etc/sddm.conf.d/zz-gaming-session.conf
-        else
-            sudo sed -i "/^\[Autologin\]/a User=${autologin_user}" /etc/sddm.conf.d/zz-gaming-session.conf
-        fi
-    fi
-    log_ok "SDDM configured"
+    case "$dm" in
+        sddm)
+            local autologin_user="$USER"
+            if [[ -f /etc/sddm.conf.d/autologin.conf ]]; then
+                autologin_user=$(sed -n 's/^User=//p' /etc/sddm.conf.d/autologin.conf 2>/dev/null | head -1)
+                [[ -z "$autologin_user" ]] && autologin_user="$USER"
+            fi
+            /usr/local/bin/gaming-dm-ctl set-autologin "gamescope-session-steam-nm" 2>/dev/null || true
+            log_ok "SDDM configured"
+            ;;
+        gdm)
+            /usr/local/bin/gaming-dm-ctl set-autologin "gamescope-session-steam-nm" 2>/dev/null || true
+            log_ok "GDM configured"
+            ;;
+        lightdm)
+            /usr/local/bin/gaming-dm-ctl set-autologin "gamescope-session-steam-nm" 2>/dev/null || true
+            log_ok "LightDM configured"
+            ;;
+        greetd)
+            /usr/local/bin/gaming-dm-ctl set-autologin "gamescope-session-steam-nm" 2>/dev/null || true
+            log_ok "greetd configured"
+            ;;
+        ly)
+            /usr/local/bin/gaming-dm-ctl set-autologin "gamescope-session-steam-nm" 2>/dev/null || true
+            log_ok "Ly configured"
+            ;;
+        none)
+            log_warn "No display manager detected. Gaming session file tetap diinstall,"
+            log_warn "tapi autologin gak bisa di-set. Install SDDM: sudo pacman -S sddm"
+            ;;
+    esac
 }
 
 setup_permissions() {
@@ -140,7 +163,7 @@ main() {
     preflight
     install_packages
     install_scripts
-    setup_sddm
+    setup_dm
     setup_permissions
     setup_performance
     summary

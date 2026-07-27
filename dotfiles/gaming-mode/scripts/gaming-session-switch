@@ -1,22 +1,12 @@
 #!/bin/bash
-CONF="/etc/sddm.conf.d/zz-gaming-session.conf"
+# gaming-session-switch — set autologin session via gaming-dm-ctl
 case "$1" in
   gaming)
-    cat > "$CONF" <<- EOC
-[Autologin]
-User=mindset
-Session=gamescope-session-steam-nm
-Relogin=true
-EOC
+    /usr/local/bin/gaming-dm-ctl set-autologin "gamescope-session-steam-nm"
     echo "Session set to: gaming mode"
     ;;
   desktop)
-    cat > "$CONF" <<- EOC
-[Autologin]
-User=mindset
-Session=hyprland
-Relogin=true
-EOC
+    /usr/local/bin/gaming-dm-ctl set-autologin "hyprland"
     echo "Session set to: desktop mode"
     ;;
   *)

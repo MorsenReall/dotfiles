@@ -3,7 +3,6 @@ if [[ ! -f /tmp/.gaming-session-active ]]; then
   exit 0
 fi
 rm -f /tmp/.gaming-session-active
-# Ensure asusctl profile from pre-gaming is available in saved state
 PRE_GAMING_ASUSCTL_FILE="/tmp/.pre-gaming-asusctl"
 SAVED_STATE_FILE="$HOME/.cache/deckshift/saved-state"
 if [[ -f "$PRE_GAMING_ASUSCTL_FILE" ]] && [[ -f "$SAVED_STATE_FILE" ]] && ! grep -q "PRE_GAMING_ASUSCTL_PROFILE" "$SAVED_STATE_FILE" 2>/dev/null; then
@@ -45,5 +44,5 @@ touch /tmp/.deckshift-just-returned 2>/dev/null || true
 rm -f /tmp/.pre-gaming-asusctl 2>/dev/null || true
 sudo -n chvt 2 2>/dev/null || true
 sleep 0.5
-sudo -n systemctl restart sddm
+sudo -n /usr/local/bin/gaming-dm-ctl restart
 exit 0
