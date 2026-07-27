@@ -620,5 +620,5 @@ Bersihin: pacman cache, orphans, Flatpak, Go/pip/npm/Cargo cache, mise, temp, jo
 |---------|--------|
 | Animation presets (16 preset) | [ML4W](https://github.com/mylinuxforwork/dotfiles) |
 | DeckShift gaming session | [github.com/28allday/deckshift](https://github.com/28allday/deckshift) |
-| Noctalia Shell | [github.com/28allday/noctalia](https://github.com/28allday/noctalia) |
+| Noctalia Shell | [github.com/noctalia-dev/noctalia](https://github.com/noctalia-dev/noctalia) |
 | Hyprland | [hyprland.org](https://hyprland.org)
