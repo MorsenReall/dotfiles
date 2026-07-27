@@ -608,6 +608,6 @@ Bersihin: pacman cache, orphans, Flatpak, Go/pip/npm/Cargo cache, mise, temp, jo
 
 - **Runtime config:** `hyprctl eval "hl.config({...})"` — cara bener di Hyprland Lua API
 - **Noctalia colors:** Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies via text parsing
-- **SDDM session:** "Hyprland (Noctalia)"
+- **Session name:** "Hyprland (Noctalia)" di display manager manapun
 - **Audio fix:** `fix-audio.sh` — portable, jalan standalone. Otomatis untuk ASUS.
 - **Package sources:** CachyOS official repos + Chaotic-AUR binary mirror via pacman
