@@ -36,7 +36,7 @@
 </p>
 
 <p align="center">
-  <sup>▶️ <i>Video demo coming soon on YouTube</i></sup>
+  <a href="https://youtu.be/kN-uwjMguwQ"><img src="https://img.shields.io/badge/▶️_Watch_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"></a>
 </p>
 
 ---
