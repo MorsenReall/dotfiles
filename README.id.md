@@ -8,8 +8,6 @@ Personal dotfiles + installer scripts untuk **ASUS TUF Gaming A15 FA506ICB** —
 
 **Saat ini:** Hyprland (stable, Lua API) + Noctalia Shell v5
 
-> **Versi:** 2.0 | Diperbarui: 2026-07-27
-
 ---
 
 ## Daftar Isi
