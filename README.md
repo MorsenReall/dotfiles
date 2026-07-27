@@ -53,7 +53,7 @@ chmod +x mydotfiles.sh
 ```
 
 Nanti di-prompt: **Install gaming mode? (y/N)**
-- `y` → jalanin `gaming.sh` (DeckShift session switch — butuh sudo)
+- `y` → auto-install **Chaotic-AUR** (kalo belum ada) → jalanin `gaming.sh` (butuh sudo)
 - `n` atau Enter → skip, aman 100%
 
 ### Yang Di-copy
@@ -440,6 +440,30 @@ Volume, brightness, playback lewat Noctalia. `XF86Sleep` → lock & suspend.
 | Key | Fungsi |
 |-----|--------|
 | `ALT + Tab` | Cycle tiled windows |
+
+### Persiapan Apps untuk Keybind
+
+Beberapa keybind panggil aplikasi tertentu. Kalo aplikasi belum terinstall, keybind gak bakal jalan:
+
+| Keybind | Aplikasi | Package (Arch) | Install lewat |
+|---------|----------|---------------|---------------|
+| `SUPER + Enter` | Foot (terminal) | `foot` | `install.sh` step 1 |
+| `SUPER + E` | Nautilus (file manager) | `nautilus` | `apps.sh` step 3 |
+| `SUPER + B` | Zen Browser | `zen-browser-bin` | `apps.sh` step 3 |
+| `SUPER + N` | Zed Editor | `zed` | `apps.sh` step 3 |
+| `SUPER + L` | LocalSend | `localsend` | `apps.sh` step 3 |
+| `SUPER + T` | Telegram | `telegram-desktop` | `apps.sh` step 3 |
+| `SUPER + W` | Karere | Flatpak dari Flathub | `install.sh` step 1 |
+| `SUPER + D` | Vesktop (Discord) | `vesktop` | `apps.sh` step 3 |
+| `SUPER + G` | Steam | `steam` | `apps.sh` step 3 |
+| `SUPER + A` | AionUI | `/opt/AionUi/AionUi` | `apps.sh` step 3 |
+| `SUPER + U` | AB Download Manager | `ab-download-manager` | `apps.sh` step 3 |
+| `SUPER + P` | ProtonPlus | `protonplus` | `apps.sh` step 3 |
+| `SUPER + ALT + G` | Gaming mode switch | `gamescope-session-git` | `gaming.sh` step 4 |
+| `SUPER + SHIFT + K` | Keybind viewer | (built-in script) | dotfiles aja |
+| `SUPER + /` | Btop (system monitor) | `btop` | `install.sh` step 1 |
+
+> Core keybind (focus, swap, window states, groups, layout, workspace, mouse) pake Hyprland built-in — gak butuh apps tambahan.
 
 ---
 
