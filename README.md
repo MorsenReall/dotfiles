@@ -24,17 +24,20 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <sup><i>Coming soon — capture your desktop and drop images here.</i></sup>
+  <img src="assets/screenshots/desktop.png" width="800" alt="Desktop">
 </p>
 
-<!--
 <p align="center">
-  <img src="assets/screenshots/desktop.png" width="800" alt="Desktop">
+  <img src="assets/screenshots/rofi.png" width="400" alt="Rofi Launcher">
+  <img src="assets/screenshots/presets.png" width="400" alt="Rofi Presets">
   <br>
-  <img src="assets/screenshots/rofi.png" width="400" alt="Rofi">
+  <img src="assets/screenshots/btop.png" width="400" alt="Btop System Monitor">
   <img src="assets/screenshots/gaming.png" width="400" alt="Gaming Mode">
 </p>
--->
+
+<p align="center">
+  <a href="assets/screenshots/tour.mp4">▶️ Watch the tour video (30s)</a>
+</p>
 
 ---
 
