@@ -82,6 +82,7 @@ chmod +x *.sh
 | 3 | `./apps.sh` | **Aplikasi** — Nautilus, Zen, Neovim, tmux, Yazi, Docker, PHP stack, ASUS tools, bloat removal |
 | 4 | `./gaming.sh` | **Gaming** — DeckShift session switch, performance tuning |
 | 5 | `sudo ./firewall.sh` | **Firewall** — UFW deny incoming, allow LocalSend |
+| 6 | `./fix-audio.sh` (opsional) | **ASUS audio fix** — ALC256 mic/audio, WirePlumber + systemd. Khusus ASUS TUF/ROG. Skip kalo bukan ASUS. |
 
 ---
 
