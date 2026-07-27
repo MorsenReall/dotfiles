@@ -32,7 +32,7 @@
   <img src="assets/screenshots/presets.png" width="400" alt="Rofi Presets">
   <br>
   <img src="assets/screenshots/btop.png" width="400" alt="Btop System Monitor">
-  <img src="assets/screenshots/gaming.png" width="400" alt="Gaming Mode">
+  <img src="assets/screenshots/launcher.png" width="400" alt="App Launcher">
 </p>
 
 <p align="center">
