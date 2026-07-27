@@ -611,3 +611,14 @@ Bersihin: pacman cache, orphans, Flatpak, Go/pip/npm/Cargo cache, mise, temp, jo
 - **Session name:** "Hyprland (Noctalia)" di display manager manapun
 - **Audio fix:** `fix-audio.sh` — portable, jalan standalone. Otomatis untuk ASUS.
 - **Package sources:** CachyOS official repos + Chaotic-AUR binary mirror via pacman
+
+---
+
+## Credits
+
+| Project | Source |
+|---------|--------|
+| Animation presets (16 preset) | [ML4W](https://github.com/mylinuxforwork/dotfiles) |
+| DeckShift gaming session | [github.com/28allday/deckshift](https://github.com/28allday/deckshift) |
+| Noctalia Shell | [github.com/28allday/noctalia](https://github.com/28allday/noctalia) |
+| Hyprland | [hyprland.org](https://hyprland.org)
