@@ -7,8 +7,9 @@ local M = "SUPER"
 -- ───────────────────────────────────────────
 -- Core
 -- ───────────────────────────────────────────
+hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland config" })
+hl.bind(M .. " + SHIFT + K", hl.dsp.exec_cmd("~/.config/hypr/scripts/keybindings.sh"), { description = "Show keybindings" })
 hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window" })
-hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland configuration" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
 hl.bind(M .. " + CTRL + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
 hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "System monitor (btop)" })
@@ -26,6 +27,8 @@ hl.bind(M .. " + CTRL + C", hl.dsp.exec_cmd("noctalia msg caffeine-toggle"), { d
 hl.bind(M .. " + CTRL + slash", hl.dsp.exec_cmd("noctalia msg panel-toggle noctalia/wallhaven:browser"), { description = "Wallhaven wallpaper" })
 hl.bind(M .. " + CTRL + backslash", hl.dsp.exec_cmd("noctalia msg panel-toggle noctalia/mpvpaper:picker"), { description = "Video wallpaper" })
 hl.bind(M .. " + CTRL + P", hl.dsp.exec_cmd("noctalia msg panel-toggle oldirtty/color_picker:panel"), { description = "Color picker" })
+hl.bind(M .. " + ALT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/text-extractor.sh"), { description = "Extract text from area" })
+
 -- ───────────────────────────────────────────
 -- Window Focus (Super + Arrows)
 -- ───────────────────────────────────────────
@@ -59,19 +62,6 @@ hl.bind(M .. " + ALT + T",
         hl.dispatch(hl.dsp.window.float({ action = "toggle" })); hl.dispatch(hl.dsp.window.pin())
     end, { description = "Toggle floating + pinned" })
 -- hl.bind(M .. " + SHIFT + O", hl.dsp.layout("overview"))  -- needs hyprland-overview plugin
--- ───────────────────────────────────────────
--- Window Cycling
--- ───────────────────────────────────────────
-hl.bind("ALT + Tab", hl.dsp.window.cycle_next({ tiled = true }), { description = "Cycle windows" })
-
--- ───────────────────────────────────────────
--- Scratchpad
--- ───────────────────────────────────────────
-hl.bind(M .. " + S", hl.dsp.workspace.toggle_special("magic"), { description = "Toggle special workspace magic" })
-hl.bind(M .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }),
-    { description = "Send window to special workspace" })
-hl.bind(M .. " + SHIFT + CTRL + S", hl.dsp.window.move({ workspace = "previous" }),
-    { description = "Move window out of special workspace" })
 
 -- ───────────────────────────────────────────
 -- Layout Controls
@@ -105,7 +95,7 @@ hl.bind(M .. " + ALT + Bracketright", hl.dsp.window.move({ into_group = "u" }), 
 hl.bind(M .. " + ALT + Bracketleft", hl.dsp.window.move({ into_group = "d" }), { description = "Into group down" })
 hl.bind(M .. " + Tab", hl.dsp.group.next(), { description = "Group next" })
 hl.bind(M .. " + SHIFT + Tab", hl.dsp.group.prev(), { description = "Group prev" })
-for i = 1, 5 do
+for i = 1, 9 do
     hl.bind(M .. " + CTRL + " .. i, hl.dsp.group.active({ index = i }), { description = "Group index " .. i })
 end
 
@@ -116,14 +106,25 @@ hl.bind(M .. " + SHIFT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-anim
     { description = "Toggle animations" })
 hl.bind(M .. " + CTRL + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-animations.sh"),
     { description = "Switch animation preset" })
-hl.bind(M .. " + ALT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/text-extractor.sh"),
-    { description = "Extract text from area" })
-hl.bind(M .. " + SHIFT + K", hl.dsp.exec_cmd("~/.config/hypr/scripts/keybindings.sh"),
-    { description = "Show keybindings" })
 hl.bind(M .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-decorations.sh"),
     { description = "Switch decoration preset" })
 hl.bind(M .. " + CTRL + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-windows.sh"),
     { description = "Switch window preset" })
+
+-- ───────────────────────────────────────────
+-- Window Cycling
+-- ───────────────────────────────────────────
+hl.bind("ALT + Tab", hl.dsp.window.cycle_next({ tiled = true }), { description = "Cycle windows" })
+
+-- ───────────────────────────────────────────
+-- Scratchpad
+-- ───────────────────────────────────────────
+hl.bind(M .. " + S", hl.dsp.workspace.toggle_special("magic"), { description = "Toggle special workspace magic" })
+hl.bind(M .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }),
+    { description = "Send window to special workspace" })
+hl.bind(M .. " + SHIFT + CTRL + S", hl.dsp.window.move({ workspace = "previous" }),
+    { description = "Move window out of special workspace" })
+
 -- ───────────────────────────────────────────
 -- Media Keys (via PipeWire — Noctalia)
 -- ───────────────────────────────────────────
