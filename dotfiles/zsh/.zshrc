@@ -40,6 +40,7 @@ alias dex='docker exec -it'
 alias dlog='docker logs -f'
 # ---- CachyOS / Arch ----
 alias update='shelly -U && mise self-update && mise upgrade && grit update'
+alias upai='opencode upgrade && mimo upgrade && kiro-cli update'
 alias install='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias search='pacman -Ss'
