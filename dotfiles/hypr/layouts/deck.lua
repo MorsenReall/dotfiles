@@ -11,12 +11,11 @@ hl.layout.register("deck", {
         end
 
         local mw = math.floor(a.w * mfact)
-        local sw = a.w - mw
 
         ctx.targets[1]:place({x = a.x, y = a.y, w = mw, h = a.h})
 
         for i = 2, n do
-            ctx.targets[i]:place({x = a.x + mw, y = a.y, w = sw, h = a.h})
+            ctx.targets[i]:place({x = a.x, y = a.y, w = mw, h = a.h})
         end
     end,
 })
