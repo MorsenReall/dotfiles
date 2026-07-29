@@ -11,7 +11,7 @@ hl.bind(M .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u lo
 hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window" })
 hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send -u low 'Hyprland reloaded'"), { description = "Reload Hyprland (redundant)" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
-hl.bind(M .. " + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
+hl.bind(M .. " + CTRL + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
 hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "System monitor (btop)" })
 
 -- ───────────────────────────────────────────
@@ -77,21 +77,8 @@ hl.bind(M .. " + SHIFT + CTRL + S", hl.dsp.window.move({ workspace = "previous" 
 -- ───────────────────────────────────────────
 -- Layout Controls
 -- ───────────────────────────────────────────
-hl.bind(M .. " + CTRL + L", function()
-  local layouts = { "scrolling", "master", "dwindle", "monocle" }
-  local ws = hl.get_active_workspace()
-  if not ws then return end
-
-  local next = "dwindle"
-  for i = 1, #layouts do
-    if layouts[i] == ws.tiled_layout then
-      next = layouts[(i % #layouts) + 1]
-      break
-    end
-  end
-  hl.workspace_rule({ workspace = tostring(ws.id), layout = next })
-  os.execute("notify-send -u low 'Layout: " .. next .. "'")
-end, { description = "Cycle all layouts" })
+hl.bind(M .. " + ALT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-layouts.sh"),
+    { description = "Switch layout (rofi picker)" })
 
 -- scrolling
 hl.bind(M .. " + ALT + left", hl.dsp.layout("consume_or_expel prev"), { description = "(Scrolling) Consume/expel left" })

@@ -46,6 +46,7 @@
 | | |
 |---|---|
 | 🎨 **16 preset animasi** | Ganti dengan `SUPER + CTRL + A` |
+| 🪟 **Pilih layout** | Pake Rofi — `SUPER + ALT + W` |
 | 🪟 **14 window + 10 dekorasi preset** | Pake Rofi — tanpa reload |
 | 🎮 **Mode gaming** | DeckShift — toggle ala Steam Deck |
 | 🔄 **DM-agnostic** | SDDM · GDM · LightDM · greetd · Ly |
@@ -211,7 +212,7 @@ Semua pake `SUPER` (Windows key). Lihat di layar: `SUPER + SHIFT + K`
 | **Core** | `SUPER + Q` | Tutup window |
 | | `SUPER + CTRL + R` | Reload Hyprland |
 | | `SUPER + Escape` | Session menu (Noctalia) |
-| | `SUPER + SHIFT + L` | Lock screen |
+| | `SUPER + CTRL + L` | Lock screen |
 | | `SUPER + /` | Btop monitor sistem |
 | **Shell** | `SUPER + Space` | App launcher |
 | | `SUPER + ALT + Space` | Control center |
@@ -229,7 +230,7 @@ Semua pake `SUPER` (Windows key). Lihat di layar: `SUPER + SHIFT + K`
 | | `SUPER + ALT + T` | Float + pin |
 | **Scratchpad** | `SUPER + S` | Toggle special |
 | | `SUPER + SHIFT + S` | Kirim ke special |
-| **Layout** | `SUPER + CTRL + L` | Ganti layout |
+| **Layout** | `SUPER + ALT + W` | Ganti layout (rofi picker) |
 | | `SUPER + CTRL + K` | Swap split |
 | | `SUPER + CTRL + J` | Toggle split |
 | **Groups** | `SUPER + SHIFT + G` | Toggle group |
@@ -314,6 +315,7 @@ gpu_stats gpu_temp gpu_name  cpu_stats cpu_temp  ram fps frame_timing
 | `switch-decorations.sh` | `SUPER + CTRL + D` | Ganti dekorasi |
 | `switch-windows.sh` | `SUPER + CTRL + S` | Ganti window |
 | `toggle-animations.sh` | `SUPER + SHIFT + A` | Animasi on/off |
+| `switch-layouts.sh` | `SUPER + ALT + W` | Pilih layout (rofi) |
 | `text-extractor.sh` | `SUPER + ALT + A` | OCR → clipboard |
 | `game-launch.sh` | Steam option | NVIDIA + gamemode + MangoHud |
 | `lock-and-suspend.sh` | `XF86Sleep` | Lock + suspend |
@@ -370,7 +372,7 @@ gpu_stats gpu_temp gpu_name  cpu_stats cpu_temp  ram fps frame_timing
 ~/.config/clean/clean.sh
 ```
 
-Bersihin: pacman cache · orphans · Flatpak · Go/pip/npm/Cargo cache · mise · temp · journal (>3d) · trash · browser cache · shader cache · Qt/GTK cache · Zed cache · zsh history · thumbnails
+Bersihin: pacman cache · orphans · Flatpak · Go/pip/npm/Cargo cache · mise · Shelly · cliphist · temp · journal (>3d) · trash · browser cache · shader cache · Qt/GTK cache · Zed cache · zsh history · thumbnails
 
 ---
 
