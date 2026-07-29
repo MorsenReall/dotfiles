@@ -2,15 +2,21 @@ hl.layout.register("deck", {
     recalculate = function(ctx)
         local n = #ctx.targets
         if n == 0 then return end
+        local a = ctx.area
+        local mfact = 0.55
+
         if n == 1 then
-            ctx.targets[1]:place(ctx.area)
+            ctx.targets[1]:place(a)
             return
         end
-        local strip = 40
-        for i, target in ipairs(ctx.targets) do
-            local off = (n - i) * strip
-            target:place({x = ctx.area.x + off, y = ctx.area.y + off,
-                          w = ctx.area.w - off * 2, h = ctx.area.h - off * 2})
+
+        local mw = math.floor(a.w * mfact)
+        local sw = a.w - mw
+
+        ctx.targets[1]:place({x = a.x, y = a.y, w = mw, h = a.h})
+
+        for i = 2, n do
+            ctx.targets[i]:place({x = a.x + mw, y = a.y, w = sw, h = a.h})
         end
     end,
 })
