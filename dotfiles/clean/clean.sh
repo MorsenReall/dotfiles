@@ -17,6 +17,8 @@ sudo pacman-key --populate chaotic 2>/dev/null && echo "  ✔ Chaotic-AUR key re
 [[ -d ~/.cache/yay ]] && rm -rf ~/.cache/yay/* && echo "  ✔ yay cache cleaned"
 [[ -d ~/.cache/paru ]] && rm -rf ~/.cache/paru/* && echo "  ✔ paru cache cleaned"
 yes | paru -Scc --noconfirm 2>/dev/null && echo "  ✔ paru AUR cache cleaned"
+[[ -d ~/.cache/Shelly ]] && rm -rf ~/.cache/Shelly/* && echo "  ✔ Shelly cache cleaned"
+[[ -d ~/.cache/cliphist ]] && rm -rf ~/.cache/cliphist/* && echo "  ✔ cliphist cache cleaned"
 flatpak uninstall --unused --delete-data 2>/dev/null && echo "  ✔ Flatpak unused runtimes removed"
 [[ -d ~/.cache/go-build ]] && rm -rf ~/.cache/go-build/* && echo "  ✔ Go build cache cleaned"
 [[ -d ~/go/pkg/mod ]] &&sudo rm -rf ~/go/pkg/mod/* && echo "  ✔ Go module cache cleaned"
@@ -28,11 +30,7 @@ flatpak uninstall --unused --delete-data 2>/dev/null && echo "  ✔ Flatpak unus
 [[ -d ~/.cargo/git ]] && rm -rf ~/.cargo/git/* && echo "  ✔ Cargo git checkouts cleaned"
 [[ -d ~/.cache/uv ]] && rm -rf ~/.cache/uv/* && echo "  ✔ uv cache cleaned"
 [[ -d ~/.local/share/uv ]] && rm -rf ~/.local/share/uv/* && echo "  ✔ uv data cleaned"
-sudo rm -rf /root/.cache/shelly 2>/dev/null && echo "  ✔ shelly cache cleaned" || echo "  ⚠ shelly cache not found"
 docker builder prune --all --force 2>/dev/null && echo "  ✔ Docker build cache cleaned"
-docker image prune -a -f 2>/dev/null && echo "  ✔ Docker unused images cleaned"
-
-echo -e "\n[4/9] mise cache..."
 rm -rf ~/.local/share/mise/http-tarballs/* 2>/dev/null && echo "  ✔ mise tarballs cleaned"
 mise cache clear 2>/dev/null && echo "  ✔ mise cache cleared"
 
