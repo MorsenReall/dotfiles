@@ -49,14 +49,9 @@ hl.layout.register("fair", {
         local a = ctx.area
         local cw = math.floor(a.w / cols)
 
-        local max_rows = 0
-        for c = 0, cols - 1 do
-            if col_rows[c] > max_rows then max_rows = col_rows[c] end
-        end
-        local rh = math.floor(a.h / max_rows)
-
         for i, target in ipairs(ctx.targets) do
             local col, row = pos[i - 1][1], pos[i - 1][2]
+            local rh = math.floor(a.h / col_rows[col])
             target:place({
                 x = a.x + col * cw,
                 y = a.y + row * rh,
