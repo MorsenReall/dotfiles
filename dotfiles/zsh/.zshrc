@@ -43,7 +43,7 @@ alias dex='docker exec -it'
 alias dlog='docker logs -f'
 
 # ---- CachyOS / Arch ----
-alias update='shelly upgrade-all && curl -fsSL https://opencode.ai/install | sh && mise self-update && mise upgrade && mimo upgrade'
+alias update='shelly upgrade && curl -fsSL https://opencode.ai/install | sh && mise self-update && mise upgrade && mimo upgrade'
 alias install='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias search='pacman -Ss'
