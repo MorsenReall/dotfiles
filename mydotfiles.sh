@@ -18,6 +18,8 @@ trap 'log_err "Failed at line ${LINENO}: ${BASH_COMMAND}"' ERR
 
 HYPR_SRC="${SCRIPT_DIR}/dotfiles/hypr"
 HYPR_DST="${HOME}/.config/hypr"
+ROFI_SRC="${SCRIPT_DIR}/dotfiles/rofi"
+ROFI_DST="${HOME}/.config/rofi"
 
 preflight() {
     [[ "$(id -u)" -ne 0 ]] || { log_err "Do not run as root."; exit 1; }
@@ -26,8 +28,18 @@ preflight() {
 copy_dotfiles() {
     log_info "Copying hypr dotfiles..."
     mkdir -p "$HYPR_DST"
-    cp -r "$HYPR_SRC"/. "$HYPR_DST/"
+    rsync -a --exclude='/applications' --exclude='/icons' "$HYPR_SRC"/. "$HYPR_DST/"
     log_ok "Hypr dotfiles copied to ${HYPR_DST}"
+
+    if [[ -d "$ROFI_SRC" ]]; then
+        log_info "Copying rofi config..."
+        mkdir -p "$ROFI_DST"
+        cp -r "$ROFI_SRC"/. "$ROFI_DST/"
+        log_ok "Rofi config copied to ${ROFI_DST}"
+    else
+        log_warn "Rofi dotfiles not found, skipping."
+    fi
+
     hyprctl reload 2>/dev/null && log_ok "Hyprland reloaded." || log_warn "Hyprland not running, reload skipped."
 }
 
