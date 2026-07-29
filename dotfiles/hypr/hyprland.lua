@@ -17,3 +17,6 @@ require("rules")
 require("layouts")
 require("gestures")
 require("startup")
+
+dofile(os.getenv("HOME") .. "/.config/hypr/layouts/fair.lua")
+dofile(os.getenv("HOME") .. "/.config/hypr/layouts/deck.lua")
