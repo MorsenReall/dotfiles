@@ -28,6 +28,7 @@ flatpak uninstall --unused --delete-data 2>/dev/null && echo "  ✔ Flatpak unus
 [[ -d ~/.cargo/git ]] && rm -rf ~/.cargo/git/* && echo "  ✔ Cargo git checkouts cleaned"
 [[ -d ~/.cache/uv ]] && rm -rf ~/.cache/uv/* && echo "  ✔ uv cache cleaned"
 [[ -d ~/.local/share/uv ]] && rm -rf ~/.local/share/uv/* && echo "  ✔ uv data cleaned"
+sudo rm -rf /root/.cache/shelly/* 2>/dev/null && echo "  ✔ shelly cache cleaned"
 docker builder prune --all --force 2>/dev/null && echo "  ✔ Docker build cache cleaned"
 docker image prune -a -f 2>/dev/null && echo "  ✔ Docker unused images cleaned"
 
