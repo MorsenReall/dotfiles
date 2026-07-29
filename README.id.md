@@ -106,6 +106,7 @@ chmod +x mydotfiles.sh
 | Dari | Ke |
 |------|----|
 | `dotfiles/hypr/` | `~/.config/hypr/` |
+| `dotfiles/rofi/` | `~/.config/rofi/` |
 | Default preset → `hyprctl reload` | Langsung teraplikasi |
 
 ---

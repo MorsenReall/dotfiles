@@ -104,8 +104,9 @@ chmod +x mydotfiles.sh
 ### What Gets Copied
 
 | From | To |
-|---|---|
+|---|---|---|
 | `dotfiles/hypr/` | `~/.config/hypr/` |
+| `dotfiles/rofi/` | `~/.config/rofi/` |
 | Default preset → `hyprctl reload` | Applied immediately |
 
 ---
