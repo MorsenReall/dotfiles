@@ -25,15 +25,12 @@ alias la='eza -a --color=always --group-directories-first --icons'
 alias ll='eza -l --color=always --group-directories-first --icons'
 alias lt='eza -aT --color=always --group-directories-first --icons'
 alias l.="eza -a | grep -e '^\.'"
-
 # ---- Bat ----
 alias cat='bat --style=plain'
-
 # ---- Apps ----
 alias op='opencode'
-alias y='yazi'
+alias yz='yazi'
 alias nv='nvim'
-
 # ---- Docker / Podman ----
 alias d='docker'
 alias dps='docker ps'
@@ -41,19 +38,36 @@ alias dpa='docker ps -a'
 alias di='docker images'
 alias dex='docker exec -it'
 alias dlog='docker logs -f'
-
 # ---- CachyOS / Arch ----
-alias update='sudo pacman -Syu && flatpak update -y'
+alias update='shelly -U && mise self-update && mise upgrade && grit update'
+alias upai='opencode upgrade && mimo upgrade && kiro-cli update && npm update -g @google/gemini-cli'
 alias install='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias search='pacman -Ss'
 alias aur='paru -S'
+alias list='shelly -P'
 alias clean='~/.config/clean/clean.sh'
 alias jctl="journalctl -p 3 -xb"
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias grep='grep --color=auto'
 alias hw='hwinfo --short'
+# ---- EasyEffects ----
+alias ee='easyeffects --gapplication-service &'
+alias effect='python -m projectpulsewire start'
+# ---- `i` = mise install + use global ----
+alias ims='mise use -g'
+# ---- Resolve convert ----
+alias convert-resolve='resolve_convert.sh -q hq'
+alias backup-resolve='resolve_backup.sh --output-dir ~/Backups'
+restore-resolve() {
+  local backup="${1:-$(ls -t ~/Backups/resolve_backup_*.tar.gz 2>/dev/null | head -1)}"
+  if [[ -z "$backup" ]]; then
+    echo "Gak ada backup di ~/Backups/"
+    return 1
+  fi
+  resolve_backup.sh --restore "$backup"
+}
 
 # ---- Zoxide ----
 if command -v zoxide &>/dev/null; then
@@ -71,4 +85,9 @@ eval "$(~/.local/bin/mise activate zsh)"
 # ---- opencode ----
 export PATH="$HOME/.opencode/bin:$PATH"
 
-# fastfetch ada di atas (sebelum instant prompt)
+# ---- Composer global ----
+export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+
+# mimocode
+export PATH=/home/mindset/.mimocode/bin:$PATH
+alias upskill="npx skills update"
