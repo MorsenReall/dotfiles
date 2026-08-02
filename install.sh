@@ -31,16 +31,9 @@ detect_os() {
     fi
 }
 
-IS_ASUS=false
-
-detect_asus() {
-    [[ $(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) == "ASUSTeK COMPUTER INC." ]] && IS_ASUS=true
-}
-
 preflight_checks() {
     log_info "Running preflight checks..."
     detect_os
-    detect_asus
     if [[ "$(id -u)" -eq 0 ]]; then
         log_err "Do not run as root."
         exit 1
@@ -50,7 +43,6 @@ preflight_checks() {
         sudo -v
     fi
     log_ok "Preflight passed."
-    $IS_ASUS && log_info "ASUS hardware detected." || log_info "Non-ASUS hardware detected."
 }
 
 pacman_install() {
@@ -61,7 +53,7 @@ pacman_install() {
             continue
         fi
         log_info "Installing ${pkg}..."
-        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
+        sudo pacman -S --needed --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
 }
 
@@ -74,18 +66,16 @@ install_packages() {
     # Essentials
     pacman_install \
         git curl wget rsync \
-        libva-utils \
         foot \
-        flatpak \
-        cmake meson ninja python python-pip \
-        shellcheck openssh
+        python \
+        openssh
 
     # CLI tools
     pacman_install \
         bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo \
-        grim slurp wl-clipboard brightnessctl playerctl \
-        eza pamixer wlsunset \
-        lm_sensors ddcutil dua-cli
+        grim slurp wl-clipboard playerctl \
+        eza wlsunset \
+        lm_sensors ddcutil
 
     # Fonts
     pacman_install \
@@ -109,28 +99,12 @@ install_packages() {
 
     # Filesystem tools
     pacman_install \
-        exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump
+        exfatprogs dosfstools smartmontools
 
     if command -v sensors-detect &>/dev/null; then
         sudo sensors-detect --auto 2>/dev/null || true
     fi
     log_ok "Packages installed."
-}
-
-setup_flatpak() {
-    command -v flatpak &>/dev/null || { log_warn "Flatpak not installed."; return 0; }
-    log_info "Adding Flathub remote..."
-    if flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo; then
-        log_ok "Flathub remote ready."
-    else
-        log_warn "Failed to add Flathub remote."
-    fi
-
-    log_info "Installing Flatpak apps..."
-    flatpak install --system -y flathub com.obsproject.Studio \
-        com.obsproject.Studio.Plugin.OBSPWVideo \
-        io.github.tobagin.karere 2>/dev/null || true
-    log_ok "Flatpak apps installed."
 }
 
 apply_icon_settings() {
@@ -139,27 +113,6 @@ apply_icon_settings() {
     gsettings set org.gnome.desktop.interface icon-theme "Tela-nord-dark" 2>/dev/null && log_ok "Tela-nord-dark set." || log_warn "Failed to set Tela-nord-dark"
     log_info "Setting Bibata-Modern-Ice as cursor..."
     gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice" 2>/dev/null && log_ok "Bibata cursor set." || log_warn "Failed to set Bibata cursor"
-}
-
-setup_nerd_fonts() {
-    log_info "Installing Nerd Fonts..."
-    local fonts_dir="$HOME/.local/share/fonts"
-    mkdir -p "$fonts_dir"
-    local temp_dir
-    temp_dir="$(mktemp -d)"
-    for font in JetBrainsMono FiraCode; do
-        local tmp_zip="$temp_dir/${font}.zip"
-        if curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip" -o "$tmp_zip"; then
-            unzip -qo "$tmp_zip" -d "$temp_dir/${font}" 2>/dev/null
-            find "$temp_dir/${font}" -maxdepth 1 \( -name '*.ttf' -o -name '*.otf' \) -exec cp {} "$fonts_dir/" \; 2>/dev/null || true
-            log_ok "${font} Nerd Font installed."
-        else
-            log_warn "Failed to download ${font} Nerd Font."
-        fi
-    done
-    rm -rf "$temp_dir"
-    fc-cache -fv "$fonts_dir" &>/dev/null || true
-    log_ok "Font cache updated."
 }
 
 setup_zsh() {
@@ -213,27 +166,12 @@ set_foot_default() {
     log_ok "Foot set as default terminal."
 }
 
-setup_mise() {
-    command -v mise &>/dev/null && { log_ok "mise already installed."; return 0; }
-    log_info "Installing mise..."
-    curl -fsSL https://mise.run | sh 2>/dev/null || log_warn "mise install failed."
-    log_ok "mise installed."
-}
-
-setup_opencode() {
-    command -v opencode &>/dev/null && { log_ok "opencode already installed."; return 0; }
-    log_info "Installing opencode..."
-    curl -fsSL https://opencode.ai/install | bash 2>/dev/null || log_warn "opencode install failed."
-    log_ok "opencode installed."
-}
-
 copy_dotfiles() {
     log_info "Copying dotfiles..."
 
     local -A config_map=(
         ["fontconfig"]=".config/fontconfig"
         ["foot"]=".config/foot"
-        ["git"]=".config/git"
         ["imv"]=".config/imv"
         ["gtk-3.0"]=".config/gtk-3.0"
         ["gtk-4.0"]=".config/gtk-4.0"
@@ -242,7 +180,6 @@ copy_dotfiles() {
         ["btop"]=".config/btop"
         ["cava"]=".config/cava"
         ["yazi"]=".config/yazi"
-        ["zed"]=".config/zed"
         ["easyeffects"]=".config/easyeffects"
         ["environment.d"]=".config/environment.d"
     )
@@ -284,38 +221,6 @@ copy_wallpapers() {
     log_ok "Wallpapers copied."
 }
 
-copy_project_dirs() {
-    local -A projects=(
-        ["docker-db"]="docker-db/docker-compose.yml"
-    )
-    for dir in "${!projects[@]}"; do
-        local src="${SCRIPT_DIR}/${dir}"
-        local dst="$HOME/Projects/${dir}"
-        local marker="${projects[$dir]}"
-        [[ -d "$src" ]] || { log_warn "${dir} dir not found, skipping."; continue; }
-        mkdir -p "$(dirname "$dst")"
-        if [[ -f "$dst/$marker" ]]; then
-            log_ok "${dir} already exists."
-        else
-            cp -r "$src" "$dst"
-            log_ok "${dir} copied."
-        fi
-    done
-}
-
-fix_audio() {
-    if $IS_ASUS; then
-        log_info "Running ASUS audio fix (fix-audio.sh)..."
-        if [[ -x "${SCRIPT_DIR}/fix-audio.sh" ]]; then
-            "${SCRIPT_DIR}/fix-audio.sh" || log_warn "fix-audio.sh reported an issue."
-        else
-            log_warn "fix-audio.sh not found, skipping audio fix."
-        fi
-    else
-        log_info "Skipping audio fix (non-ASUS)."
-    fi
-}
-
 setup_chaotic_aur() {
     log_info "Setting up Chaotic-AUR (binary repo mirror, via pacman)..."
     if pacman -Qi chaotic-keyring &>/dev/null; then
@@ -347,18 +252,12 @@ main() {
     preflight_checks
     setup_chaotic_aur
     install_packages
-    setup_flatpak
-    setup_nerd_fonts
     apply_icon_settings
     set_foot_default
     setup_zsh
-    setup_mise
-    setup_opencode
     copy_dotfiles
     setup_gnome_keyring
-    fix_audio
     copy_wallpapers
-    copy_project_dirs
     echo ""
     log_ok "Setup complete."
     log_info "Log saved to: ${LOG_FILE}"
