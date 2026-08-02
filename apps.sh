@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CachyOS app support for MangoWM.
+# CachyOS.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -23,18 +23,10 @@ detect_os() {
     log_err "This script is for CachyOS/Arch only."; exit 1
 }
 
-IS_ASUS=false
-
-detect_asus() {
-    [[ $(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) == "ASUSTeK COMPUTER INC." ]] && IS_ASUS=true
-}
-
 preflight_checks() {
     [[ "$(id -u)" -ne 0 ]] || { log_err "Do not run as root."; exit 1; }
     detect_os
-    detect_asus
     sudo -n true 2>/dev/null || sudo -v
-    $IS_ASUS && log_info "ASUS hardware detected." || log_info "Non-ASUS hardware detected."
 }
 
 pacman_install() {
@@ -45,53 +37,45 @@ pacman_install() {
             continue
         fi
         log_info "Installing ${pkg}..."
-        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
+        sudo pacman -S --needed --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
+}
+
+remove_cachyos_defaults() {
+    log_info "Removing CachyOS pre-installed packages (not needed)..."
+    sudo pacman -Rns --noconfirm micro alacritty meld cachyos-micro-settings 2>/dev/null || true
+    log_ok "Removed micro, alacritty, meld."
+
+    log_info "Hiding unused desktop entries..."
+    local entries="avahi-discover.desktop bssh.desktop bvnc.desktop qv4l2.desktop qvidcap.desktop footclient.desktop foot-server.desktop rofi.desktop rofi-theme-selector.desktop"
+    for f in $entries; do
+        if [ -f "/usr/share/applications/$f" ]; then
+            cp -n "/usr/share/applications/$f" ~/.local/share/applications/ 2>/dev/null || true
+            grep -qx "Hidden=true" ~/.local/share/applications/"$f" 2>/dev/null || \
+                echo "Hidden=true" >> ~/.local/share/applications/"$f"
+        fi
+    done
+    log_ok "Desktop entries hidden."
 }
 
 install_core_app_support() {
     log_info "Installing desktop app support..."
 
     pacman_install \
-        nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp nautilus-open-any-terminal \
-        yazi neovim btop mpv imv gnome-disk-utility gnome-calculator \
+        nautilus gvfs gvfs-smb libmtp nautilus-open-any-terminal \
+        yazi btop mpv imv gnome-calculator \
         qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg pavucontrol \
-        tesseract tesseract-data-eng imagemagick \
+        imagemagick \
         xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays \
         cava \
-        ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx \
-        telegram-desktop \
-        localsend zen-browser-bin zed \
         ffmpegthumbnailer nautilus-image-converter \
-        lazygit nodejs bottom gdu qt6-5compat \
-        mpv-mpris dua-cli gpu-screen-recorder satty tldr gum lazydocker \
-        bat eza fd \
-        docker docker-buildx docker-compose evince \
+        gdu qt6-5compat \
+        mpv-mpris gpu-screen-recorder satty tldr \
         font-manager \
-        ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
-        android-studio intellij-idea-community-edition \
-        zoom \
+        gamemode lib32-gamemode faugus-launcher protonplus \
         easyeffects
 
-    if $IS_ASUS; then
-        pacman_install asusctl rog-control-center
-    fi
-
-    if command -v asusctl &>/dev/null; then
-        log_info "Configuring ASUS daemon..."
-        sudo mkdir -p /etc/asusd
-        sudo systemctl enable --now asusd 2>/dev/null || true
-        log_ok "ASUS daemon configured."
-    fi
-
-    if command -v docker &>/dev/null; then
-        log_info "Enabling Docker..."
-        sudo systemctl enable --now docker 2>/dev/null || true
-        sudo usermod -aG docker "$USER" 2>/dev/null || true
-        log_ok "Docker enabled."
-    fi
-
-    command -v xdg-user-dirs-update &>/dev/null && xdg-user-dirs-update 2>/dev/null || true
+  command -v xdg-user-dirs-update &>/dev/null && xdg-user-dirs-update 2>/dev/null || true
 
     if command -v nautilus &>/dev/null; then
         gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal foot 2>/dev/null || true
@@ -100,7 +84,7 @@ install_core_app_support() {
 }
 
 fix_terminal_desktop() {
-    local apps=(btop nvim yazi)
+    local apps=(btop yazi)
     local app src dst
     mkdir -p ~/.local/share/applications
     for app in "${apps[@]}"; do
@@ -129,16 +113,6 @@ deploy_custom_desktop_entries() {
         cp -r "$icon_src"/. "$icon_dst/" 2>/dev/null || true
         gtk-update-icon-cache "$HOME/.local/share/icons/hicolor" 2>/dev/null || true
         log_ok "Custom desktop icons deployed."
-    fi
-}
-
-deploy_nvim_config() {
-    local src="${SCRIPT_DIR}/dotfiles/nvim"
-    local dst="$HOME/.config/nvim"
-    if [[ -d "$src" ]] && ! [[ -f "$dst/init.lua" ]]; then
-        mkdir -p "$(dirname "$dst")"
-        cp -r "$src" "$dst"
-        log_ok "AstroNvim config deployed."
     fi
 }
 
@@ -171,66 +145,13 @@ apply_icon_cursor_settings() {
 
 main() {
     preflight_checks
+    remove_cachyos_defaults
     install_core_app_support
-    install_php_dev
-    deploy_php_config
     fix_terminal_desktop
     deploy_custom_desktop_entries
-    deploy_nvim_config
     deploy_tmux_config
     apply_icon_cursor_settings
-    fix_asus_audio
-    remove_cachyos_defaults
     log_ok "CachyOS app support complete. Log: ${LOG_FILE}"
-}
-
-install_php_dev() {
-    log_info "Installing PHP development stack..."
-    pacman_install php php-gd php-intl php-pgsql php-sqlite php-fpm php-tidy php-imagick php-redis php-memcached php-mongodb php-apcu composer php-igbinary php-xsl
-    composer global require laravel/installer 2>/dev/null || true
-    log_ok "PHP development stack installed."
-}
-
-deploy_php_config() {
-    local src="${SCRIPT_DIR}/dotfiles/php"
-    local dst="/etc/php"
-    if [[ -d "$src" ]]; then
-        log_info "Deploying PHP configuration..."
-        sudo mkdir -p "$dst"
-        sudo cp "$src/php.ini" "$dst/php.ini"
-        sudo cp -r "$src/conf.d/." "$dst/conf.d/"
-        log_ok "PHP configuration deployed."
-    fi
-}
-
-fix_asus_audio() {
-    $IS_ASUS || return 0
-    log_info "Fixing ASUS audio (ALC256)..."
-    local card=2
-    amixer -c "$card" sset 'Capture' 45 unmute >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Internal Mic Boost' 1 >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Speaker' 87 unmute >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Master' 87 unmute >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Auto-Mute Mode' Enabled >/dev/null 2>&1 || true
-    sudo alsactl store "$card" 2>/dev/null || true
-    log_ok "ASUS audio fixed (ALC256)."
-}
-
-remove_cachyos_defaults() {
-    log_info "Removing CachyOS pre-installed packages (not needed)..."
-    sudo pacman -Rns --noconfirm micro alacritty meld cachyos-micro-settings 2>/dev/null || true
-    log_ok "Removed micro, alacritty, meld."
-
-    log_info "Hiding unused desktop entries..."
-    local entries="avahi-discover.desktop bssh.desktop bvnc.desktop qv4l2.desktop qvidcap.desktop footclient.desktop foot-server.desktop java-java21-openjdk.desktop jconsole-java21-openjdk.desktop jshell-java21-openjdk.desktop rofi.desktop rofi-theme-selector.desktop"
-    for f in $entries; do
-        if [ -f "/usr/share/applications/$f" ]; then
-            cp -n "/usr/share/applications/$f" ~/.local/share/applications/ 2>/dev/null || true
-            grep -qx "Hidden=true" ~/.local/share/applications/"$f" 2>/dev/null || \
-                echo "Hidden=true" >> ~/.local/share/applications/"$f"
-        fi
-    done
-    log_ok "Desktop entries hidden."
 }
 
 main "$@"
