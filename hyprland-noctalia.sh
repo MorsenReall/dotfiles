@@ -37,25 +37,16 @@ pacman_install() {
             continue
         fi
         log_info "Installing ${pkg}..."
-        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
+        sudo pacman -S --needed --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
 }
 
 install_packages() {
     log_info "Installing Hyprland-specific packages..."
-    pacman_install hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control
+    pacman_install hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker sddm
     pacman_install noctalia
     pacman_install gnome-keyring
     log_ok "Packages installed."
-}
-
-enable_switcheroo() {
-    if systemctl is-enabled switcheroo-control &>/dev/null 2>&1; then
-        log_ok "switcheroo-control already enabled."
-    else
-        sudo systemctl enable --now switcheroo-control
-        log_ok "switcheroo-control enabled."
-    fi
 }
 
 enable_sddm() {
@@ -122,8 +113,6 @@ copy_dotfiles() {
         ["rofi"]=".config/rofi"
         ["xdg-desktop-portal"]=".config/xdg-desktop-portal"
         ["fastfetch"]=".config/fastfetch"
-        ["MangoHud"]=".config/MangoHud"
-        ["nvim"]=".config/nvim"
     )
     for src_dir in "${!config_map[@]}"; do
         local src="${SCRIPT_DIR}/dotfiles/${src_dir}"
@@ -151,7 +140,6 @@ copy_dotfiles() {
 main() {
     preflight_checks
     install_packages
-    enable_switcheroo
     enable_sddm
     log_info "Enabling gnome-keyring systemd user service..."
     systemctl --user enable --now gnome-keyring-daemon.service 2>/dev/null && log_ok "gnome-keyring enabled." || log_warn "gnome-keyring enable failed."
